@@ -31,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let valid = true;
 
-    // 🟢 NAME
     if (!name.value.trim()) {
       showError("pf-name", "Name is required");
       valid = false;
@@ -40,13 +39,11 @@ document.addEventListener("DOMContentLoaded", function () {
       valid = false;
     }
 
-    // 🟢 CATEGORY
     if (!category.value.trim()) {
       showError("pf-category", "Select or enter category");
       valid = false;
     }
 
-    // 🟢 PRICE
     if (!price.value.trim()) {
       showError("pf-price", "Price is required");
       valid = false;
@@ -55,13 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
       valid = false;
     }
 
-    // 🟢 IMAGE
     if (!image.value.trim()) {
       showError("pf-image", "Image is required");
       valid = false;
     }
 
-    // 🟢 DESCRIPTION
     if (!description.value.trim()) {
       showError("pf-description", "Description required");
       valid = false;
@@ -89,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const custom = document.getElementById("pf-category-custom");
   const hidden = document.getElementById("pf-category");
 
-  // 🟢 لما تختاري من select
   select.addEventListener("change", function () {
 
     if (select.value === "Other") {
@@ -102,7 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   });
 
-  // 🟢 لما تكتبي custom
   custom.addEventListener("input", function () {
     hidden.value = custom.value;
   });

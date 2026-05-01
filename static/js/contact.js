@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-    // ========================= 🔥 CHARACTER COUNTER =========================
+    // =========================  CHARACTER COUNTER =========================
 
     const msgTextarea = document.getElementById("message");
     const charCounter = document.querySelector(".char-counter");

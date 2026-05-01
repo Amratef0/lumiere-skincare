@@ -19,13 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
       el.classList.remove("show");
     });
 
-    // 🟢 Name
+    //  Name
     if (!name.value.trim()) {
       showError("reg-name-error", "Name is required");
       valid = false;
     }
 
-    // 🟢 Email
+    //  Email
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.value.trim()) {
       showError("reg-email-error", "Email is required");
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
       valid = false;
     }
 
-    // 🟢 Password
+    //  Password
     if (!password.value) {
       showError("reg-password-error", "Password is required");
       valid = false;
@@ -44,19 +44,19 @@ document.addEventListener("DOMContentLoaded", function () {
       valid = false;
     }
 
-    // 🟢 Confirm Password
+    // Confirm Password
     if (confirm.value !== password.value) {
       showError("reg-confirm-error", "Passwords do not match");
       valid = false;
     }
 
-    // 🟢 Terms
+    // Terms
     if (!terms.checked) {
       showError("reg-terms-error", "You must accept terms");
       valid = false;
     }
 
-    // ❌ لو فيه error → وقف الإرسال
+    //  لو فيه error → وقف الإرسال
     if (!valid) {
       e.preventDefault();
     }

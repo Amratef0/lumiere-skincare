@@ -37,4 +37,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   });
 
+  // toggle password visibility
+  const toggleBtn = document.getElementById("login-toggle-pw");
+  const passwordInput = document.getElementById("login-password");
+
+  if (toggleBtn && passwordInput) {
+    toggleBtn.addEventListener("click", function () {
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+      } else {
+        passwordInput.type = "password";
+      }
+    });
+  }
+
 });

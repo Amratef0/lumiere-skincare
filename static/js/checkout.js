@@ -1,10 +1,3 @@
- /**
- * Checkout Page Logic
- * ────────────────────
- * 1. Renders order summary from LumiereCart (localStorage)
- * 2. Validates all form fields on submit
- * 3. On success: saves order to sessionStorage, clears cart, redirects
- */
 document.addEventListener('DOMContentLoaded', function () {
 
   function showErr(id, msg) {
@@ -32,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return el ? el.value.trim() : '';
   }
 
-  // 🟢 clear error live
+  //  clear error live
   [
     'chk-name',
     'chk-email',
@@ -55,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // 🟢 submit
+  //  submit
   document.getElementById('checkoutForm').addEventListener('submit', function (e) {
 
     var isValid = true;
@@ -71,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
       isValid = false;
     }
 
-    // 🔹 Email
+    //  Email
     var email = val('chk-email');
     clearErr('chk-email');
     if (!email) {
@@ -82,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
       isValid = false;
     }
 
-    // 🔹 Phone
+    //  Phone
     var phone = val('chk-phone');
     clearErr('chk-phone');
     var digits = phone.replace(/\D/g, '');
@@ -95,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
       isValid = false;
     }
 
-    // 🔹 Address
+    //  Address
     var address = val('chk-address');
     clearErr('chk-address');
     if (!address) {
@@ -103,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
       isValid = false;
     }
 
-    // 🔹 City
+    // City
     var city = val('chk-city');
     clearErr('chk-city');
     if (!city) {
@@ -111,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
       isValid = false;
     }
 
-    // 🔹 ZIP
+    //  ZIP
     var zip = val('chk-zip');
     clearErr('chk-zip');
     if (!zip) {
@@ -119,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
       isValid = false;
     }
 
-    // 🔹 Country
+    //  Country
     var country = val('chk-country');
     clearErr('chk-country');
     if (!country) {

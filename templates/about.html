@@ -1,209 +1,312 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link
-            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
-            rel="stylesheet"/>
-   
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-        <script src="{{ url_for('static', filename='js/main.js') }}"defer="defer"></script>
-        <script src="{{ url_for('static', filename='js/base.js') }}"defer="defer"></script>
-        <title>Lumière — Glow Naturally</title>
-    </head>
-     <body data-user="{{ session.get('user_name') or '' }}">
-        <!-- NAVBAR -->
-        <div id="navbar"></div>
-        <!-- PAGE HERO -->
-          <!-- ── PAGE HERO ── -->
-        <div class="page-hero">
-            <div class="section-label">Our Story</div>
-            <h1 class="section-title">Beauty Born
-                <em>From Nature</em>
-            </h1>
-            <p>Lumière was founded on a simple belief: your skin deserves honesty — clean
-                ingredients, transparent formulas, and real results.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <script
+      src="{{ url_for('static', filename='js/main.js') }}"
+      defer="defer"
+    ></script>
+    <script
+      src="{{ url_for('static', filename='js/base.js') }}"
+      defer="defer"
+    ></script>
+    <title>Lumière — Glow Naturally</title>
+  </head>
+  <body data-user="{{ session.get('user_name') or '' }}">
+    <!-- NAVBAR -->
+    <div id="navbar"></div>
+    <!-- PAGE HERO -->
+    <!-- ── PAGE HERO ── -->
+    <div class="page-hero">
+      <div class="section-label">Our Story</div>
+      <h1 class="section-title">
+        Beauty Born
+        <em>From Nature</em>
+      </h1>
+      <p>
+        Lumière was founded on a simple belief: your skin deserves honesty —
+        clean ingredients, transparent formulas, and real results.
+      </p>
+    </div>
+
+    <!-- ── BRAND STORY ── -->
+    <!-- ADDED: full brand story section with image + text layout -->
+    <section class="about-story">
+      <div class="about-story-grid">
+        <div class="about-story-img">
+          <img
+            src="/static/images/About_Page/brand_story.avif"
+            alt="Founder creating skincare"
+          />
         </div>
-
-        <!-- ── BRAND STORY ── -->
-        <!-- ADDED: full brand story section with image + text layout -->
-        <section class="about-story">
-            <div class="about-story-grid">
-                <div class="about-story-img">
-                    <img
-                        src="/static/images/About_Page/brand_story.avif" 
-                        alt="Founder creating skincare"/>
-                </div>
-                <div class="about-text">
-                    <div class="section-label">Where It Began</div>
-                    <h2 class="section-title">A Lab, a Garden,
-                        <em>a Dream</em>
-                    </h2>
-                    <p>Lumière was born in 2018 in a small Parisian apartment — part kitchen
-                        laboratory, part rose garden. Our founder, Amélie, spent three years obsessing
-                        over one question: why do most skincare products contain ingredients the skin
-                        barely recognizes?</p>
-                    <p>The answer became our mission. We set out to create formulas where every
-                        ingredient has a purpose — sourced from ethical botanical farms, backed by
-                        dermatology, and crafted with the kind of care you'd want for your own skin.</p>
-                    <p>Today, Lumière is trusted by over 12,000 customers in 40+ countries — and
-                        every product is still made in small batches to ensure quality you can actually
-                        feel.</p>
-                    <div
-                        style="display: flex; gap: 3rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--beige);">
-                        <div>
-                            <div class="stat-num">12K+</div>
-                            <div class="stat-label">Happy Customers</div>
-                        </div>
-                        <div>
-                            <div class="stat-num">40+</div>
-                            <div class="stat-label">Countries Served</div>
-                        </div>
-                        <div>
-                            <div class="stat-num">100%</div>
-                            <div class="stat-label">Vegan & Cruelty Free</div>
-                        </div>
-                    </div>
-                </div>
+        <div class="about-text">
+          <div class="section-label">Where It Began</div>
+          <h2 class="section-title">
+            A Lab, a Garden,
+            <em>a Dream</em>
+          </h2>
+          <p>
+            Lumière was born in 2018 in a small Parisian apartment — part
+            kitchen laboratory, part rose garden. Our founder, Amélie, spent
+            three years obsessing over one question: why do most skincare
+            products contain ingredients the skin barely recognizes?
+          </p>
+          <p>
+            The answer became our mission. We set out to create formulas where
+            every ingredient has a purpose — sourced from ethical botanical
+            farms, backed by dermatology, and crafted with the kind of care
+            you'd want for your own skin.
+          </p>
+          <p>
+            Today, Lumière is trusted by over 12,000 customers in 40+ countries
+            — and every product is still made in small batches to ensure quality
+            you can actually feel.
+          </p>
+          <div
+            style="
+              display: flex;
+              gap: 3rem;
+              margin-top: 2.5rem;
+              padding-top: 2rem;
+              border-top: 1px solid var(--beige);
+            "
+          >
+            <div>
+              <div class="stat-num">12K+</div>
+              <div class="stat-label">Happy Customers</div>
             </div>
-        </section>
-
-        <!-- ── VALUES ── -->
-        <!-- ADDED: three-column values section -->
-        <section class="about-values">
-            <div style="text-align: center;">
-                <div class="section-label" style="justify-content: center;">What We Stand For</div>
-                <h2 class="section-title">Our
-                    <em>Core Values</em>
-                </h2>
-                <p class="section-sub" style="margin: .8rem auto 0;">Everything we do is guided by three non-negotiables.</p>
+            <div>
+              <div class="stat-num">40+</div>
+              <div class="stat-label">Countries Served</div>
             </div>
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="value-emoji">🌿</div>
-                    <div class="value-title">Clean Ingredients</div>
-                    <div class="value-desc">We never use parabens, sulfates, synthetic fragrance, or
-                        microplastics. Every ingredient is vetted against EWG's Skin Deep database.</div>
-                </div>
-                <div class="value-card">
-                    <div class="value-emoji">🌍</div>
-                    <div class="value-title">Sustainable Sourcing</div>
-                    <div class="value-desc">We partner with regenerative farms in Morocco, France,
-                        and Japan. Our packaging is made from 90% post-consumer recycled materials.</div>
-                </div>
-                <div class="value-card">
-                    <div class="value-emoji">🔬</div>
-                    <div class="value-title">Clinically Tested</div>
-                    <div class="value-desc">Every formula is dermatologist-tested and validated in
-                        independent clinical trials before it ever reaches your hands.</div>
-                </div>
+            <div>
+              <div class="stat-num">100%</div>
+              <div class="stat-label">Vegan & Cruelty Free</div>
             </div>
-        </section>
-
-        <!-- ── INGREDIENTS PHILOSOPHY ── -->
-        <!-- ADDED: ingredients deep-dive section -->
-        <section class="about-ingredients">
-            <div class="about-story-grid" style="gap: 4rem;">
-                <div>
-                    <div class="section-label">The Good Stuff</div>
-                    <h2 class="section-title">Ingredients We
-                        <em>Love</em>
-                    </h2>
-                    <p class="section-sub">We're obsessed with what goes into every drop. Here are
-                        the star botanicals you'll find across our range:</p>
-                    <div class="ingredients-list">
-                        <div class="ingredient-item">
-                            <div class="ingredient-dot"></div>
-                            <div>
-                                <div class="ingredient-name">Rosehip Seed Oil</div>
-                                <div class="ingredient-desc">Rich in Vitamin C & essential fatty acids.
-                                    Brightens, firms, and reduces the appearance of fine lines.</div>
-                            </div>
-                        </div>
-                        <div class="ingredient-item">
-                            <div class="ingredient-dot"></div>
-                            <div>
-                                <div class="ingredient-name">Hyaluronic Acid</div>
-                                <div class="ingredient-desc">Draws moisture from the air into skin. Provides up
-                                    to 72 hours of deep hydration without clogging pores.</div>
-                            </div>
-                        </div>
-                        <div class="ingredient-item">
-                            <div class="ingredient-dot"></div>
-                            <div>
-                                <div class="ingredient-name">Aloe Vera</div>
-                                <div class="ingredient-desc">Our #1 soothing hero. Calms inflammation, reduces
-                                    redness, and helps skin heal naturally.</div>
-                            </div>
-                        </div>
-                        <div class="ingredient-item">
-                            <div class="ingredient-dot"></div>
-                            <div>
-                                <div class="ingredient-name">Green Tea Extract</div>
-                                <div class="ingredient-desc">A powerhouse antioxidant that fights free radicals,
-                                    reduces oil production, and protects against UV damage.</div>
-                            </div>
-                        </div>
-                        <div class="ingredient-item">
-                            <div class="ingredient-dot"></div>
-                            <div>
-                                <div class="ingredient-name">Niacinamide</div>
-                                <div class="ingredient-desc">Visibly minimizes pores, fades dark spots, and
-                                    strengthens the skin barrier over time.</div>
-                            </div>
-                        </div>
-                        <div class="ingredient-item">
-                            <div class="ingredient-dot"></div>
-                            <div>
-                                <div class="ingredient-name">Jojoba Oil</div>
-                                <div class="ingredient-desc">Mimics skin's natural sebum. Balances oil
-                                    production for both dry and oily skin types.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div style="display: flex; align-items: center;">
-                    <div
-                        style="border-radius: 30px; overflow: hidden; aspect-ratio: 4/5; width: 100%;">
-                        <img
-                            src="/static/images/About_Page/Ingredients.avif"
-                            alt="Botanical ingredients"
-                            style="width:100%; height:100%; object-fit:cover;"/>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ── SUSTAINABILITY BANNER ── -->
-        <!-- ADDED: full-width sustainability callout -->
-        <div
-            style="background: var(--deep-rose); padding: 5rem 7%; text-align: center; position: relative; overflow: hidden;">
-            <div
-                style="position: absolute; top: -80px; left: -80px; width: 300px; height: 300px; border-radius: 50%; background: rgba(255,255,255,.06);"></div>
-            <div
-                style="position: absolute; bottom: -80px; right: -80px; width: 400px; height: 400px; border-radius: 50%; background: rgba(255,255,255,.04);"></div>
-            <div style="position: relative; max-width: 580px; margin: 0 auto;">
-                <div style="font-size: 2.5rem; margin-bottom: 1rem;">✨</div>
-                <h2
-                    style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: white; margin-bottom: 1rem; line-height: 1.2;">
-                    1% of Every Sale Goes to
-                    <em>Reforestation</em>
-                </h2>
-                <p
-                    style="color: rgba(255,255,255,.75); font-size: .92rem; line-height: 1.8; margin-bottom: 2rem;">
-                    We're proud partners of One Tree Planted. In 2024 alone, Lumière customers
-                    helped plant 24,000 trees across four continents.
-                </p>
-                <a
-                    href="/contact"
-                    class="btn-primary"
-                    style="background: white; color: var(--deep-rose);">Learn More</a>
-            </div>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <!-- FOOTER -->
-        <div id="footer"></div>
-    </body>
+    <!-- ── VALUES ── -->
+    <!-- ADDED: three-column values section -->
+    <section class="about-values">
+      <div style="text-align: center">
+        <div class="section-label" style="justify-content: center">
+          What We Stand For
+        </div>
+        <h2 class="section-title">
+          Our
+          <em>Core Values</em>
+        </h2>
+        <p class="section-sub" style="margin: 0.8rem auto 0">
+          Everything we do is guided by three non-negotiables.
+        </p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-emoji">🌿</div>
+          <div class="value-title">Clean Ingredients</div>
+          <div class="value-desc">
+            We never use parabens, sulfates, synthetic fragrance, or
+            microplastics. Every ingredient is vetted against EWG's Skin Deep
+            database.
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-emoji">🌍</div>
+          <div class="value-title">Sustainable Sourcing</div>
+          <div class="value-desc">
+            We partner with regenerative farms in Morocco, France, and Japan.
+            Our packaging is made from 90% post-consumer recycled materials.
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-emoji">🔬</div>
+          <div class="value-title">Clinically Tested</div>
+          <div class="value-desc">
+            Every formula is dermatologist-tested and validated in independent
+            clinical trials before it ever reaches your hands.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── INGREDIENTS PHILOSOPHY ── -->
+    <!-- ADDED: ingredients deep-dive section -->
+    <section class="about-ingredients">
+      <div class="about-story-grid" style="gap: 4rem">
+        <div>
+          <div class="section-label">The Good Stuff</div>
+          <h2 class="section-title">
+            Ingredients We
+            <em>Love</em>
+          </h2>
+          <p class="section-sub">
+            We're obsessed with what goes into every drop. Here are the star
+            botanicals you'll find across our range:
+          </p>
+          <div class="ingredients-list">
+            <div class="ingredient-item">
+              <div class="ingredient-dot"></div>
+              <div>
+                <div class="ingredient-name">Rosehip Seed Oil</div>
+                <div class="ingredient-desc">
+                  Rich in Vitamin C & essential fatty acids. Brightens, firms,
+                  and reduces the appearance of fine lines.
+                </div>
+              </div>
+            </div>
+            <div class="ingredient-item">
+              <div class="ingredient-dot"></div>
+              <div>
+                <div class="ingredient-name">Hyaluronic Acid</div>
+                <div class="ingredient-desc">
+                  Draws moisture from the air into skin. Provides up to 72 hours
+                  of deep hydration without clogging pores.
+                </div>
+              </div>
+            </div>
+            <div class="ingredient-item">
+              <div class="ingredient-dot"></div>
+              <div>
+                <div class="ingredient-name">Aloe Vera</div>
+                <div class="ingredient-desc">
+                  Our #1 soothing hero. Calms inflammation, reduces redness, and
+                  helps skin heal naturally.
+                </div>
+              </div>
+            </div>
+            <div class="ingredient-item">
+              <div class="ingredient-dot"></div>
+              <div>
+                <div class="ingredient-name">Green Tea Extract</div>
+                <div class="ingredient-desc">
+                  A powerhouse antioxidant that fights free radicals, reduces
+                  oil production, and protects against UV damage.
+                </div>
+              </div>
+            </div>
+            <div class="ingredient-item">
+              <div class="ingredient-dot"></div>
+              <div>
+                <div class="ingredient-name">Niacinamide</div>
+                <div class="ingredient-desc">
+                  Visibly minimizes pores, fades dark spots, and strengthens the
+                  skin barrier over time.
+                </div>
+              </div>
+            </div>
+            <div class="ingredient-item">
+              <div class="ingredient-dot"></div>
+              <div>
+                <div class="ingredient-name">Jojoba Oil</div>
+                <div class="ingredient-desc">
+                  Mimics skin's natural sebum. Balances oil production for both
+                  dry and oily skin types.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center">
+          <div
+            style="
+              border-radius: 30px;
+              overflow: hidden;
+              aspect-ratio: 4/5;
+              width: 100%;
+            "
+          >
+            <img
+              src="/static/images/About_Page/Ingredients.avif"
+              alt="Botanical ingredients"
+              style="width: 100%; height: 100%; object-fit: cover"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SUSTAINABILITY BANNER ── -->
+    <!-- ADDED: full-width sustainability callout -->
+    <div
+      style="
+        background: var(--deep-rose);
+        padding: 5rem 7%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      "
+    >
+      <div
+        style="
+          position: absolute;
+          top: -80px;
+          left: -80px;
+          width: 300px;
+          height: 300px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.06);
+        "
+      ></div>
+      <div
+        style="
+          position: absolute;
+          bottom: -80px;
+          right: -80px;
+          width: 400px;
+          height: 400px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.04);
+        "
+      ></div>
+      <div style="position: relative; max-width: 580px; margin: 0 auto">
+        <div style="font-size: 2.5rem; margin-bottom: 1rem">✨</div>
+        <h2
+          style="
+            font-family: &quot;Cormorant Garamond&quot;, serif;
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 300;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+          "
+        >
+          1% of Every Sale Goes to
+          <em>Reforestation</em>
+        </h2>
+        <p
+          style="
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.92rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+          "
+        >
+          We're proud partners of One Tree Planted. In 2024 alone, Lumière
+          customers helped plant 24,000 trees across four continents.
+        </p>
+        <a
+          href="/contact"
+          class="btn-primary"
+          style="background: white; color: var(--deep-rose)"
+          >Learn More</a
+        >
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer"></div>
+  </body>
 </html>

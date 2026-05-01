@@ -7,22 +7,22 @@ document.addEventListener("DOMContentLoaded", function () {
     let authHTML = "";
 
     if (user && isAdmin === "1") {
-      // 👑 Admin
+      //  Admin
       authHTML = `
-        <span class="nav-user">Hi, ${user} 👑</span>
+        <span class="nav-user">Hi, ${user} </span>
         <a href="/admin" class="nav-admin-link">Admin</a>
         <a href="/logout" class="nav-login">Logout</a>
       `;
     } 
     else if (user) {
-      // 👤 Normal user
+      //  Normal user
       authHTML = `
-        <span class="nav-user">Hi, ${user} 👋</span>
+        <span class="nav-user">Hi, ${user} </span>
         <a href="/logout" class="nav-login">Logout</a>
       `;
     } 
     else {
-      // 🚪 Guest
+      //  Guest
       authHTML = `
         <a href="/login" class="nav-login">Login / Register</a>
       `;
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
             <div class="footer-bottom">
                 <span>© 2025 Lumière Skincare. All rights reserved.</span>
-                <span>Made with 💖 for every skin story.</span>
+                <span>Made with love for every skin story.</span>
             </div>
         </footer>
 
