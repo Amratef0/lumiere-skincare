@@ -61,108 +61,63 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
   }
     function loadFooter() {
-        return `
-     <!-- FOOTER -->
-        <footer>
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <div class="logo">Lumi<span style="color:var(--rose); font-style:italic">ère</span></div>
-                    
-                    <div class="footer-socials">
-                        <a class="social-btn" href="https://x.com"
-                                target="_blank"
-                                aria-label="Twitter" href="#">𝕏</a>
-                               
-                            <a
-                                class="social-btn"
-                                href="https://www.linkedin.com"
-                                target="_blank"
-                                aria-label="LinkedIn"
-                                >in</a>
-                        <a class="social-btn" href="https://www.instagram.com"
-                                target="_blank"
-                                aria-label="Instagram" href="#">📸</a>
-                        <a class="social-btn" href="https://www.youtube.com"
-                                target="_blank"
-                                aria-label="YouTube" href="#">▶</a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h4>Shop</h4>
-                    <ul>
-                        <li>
-                            <a href="#">Face Serums</a>
-                        </li>
-                        <li>
-                            <a href="#">Moisturizers</a>
-                        </li>
-                        <li>
-                            <a href="#">Cleansers</a>
-                        </li>
-                        <li>
-                            <a href="#">Eye Care</a>
-                        </li>
-                        <li>
-                            <a href="#">Bundles</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li>
-                            <a href="#">Our Story</a>
-                        </li>
-                        <li>
-                            <a href="#">Ingredients</a>
-                        </li>
-                        <li>
-                            <a href="#">Sustainability</a>
-                        </li>
-                        <li>
-                            <a href="#">Press</a>
-                        </li>
-                        <li>
-                            <a href="#">Careers</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Support</h4>
-                    <ul>
-                        <li>
-                            <a href="#">FAQ</a>
-                        </li>
-                        <li>
-                            <a href="#">Shipping & Returns</a>
-                        </li>
-                        <li>
-                            <a href="#">Skin Quiz</a>
-                        </li>
-                        <li>
-                            <a href="#">Contact Us</a>
-                        </li>
-                        <li>
-                            <a href="#">Privacy Policy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <span>© 2025 Lumière Skincare. All rights reserved.</span>
-                <span>Made with love for every skin story.</span>
-            </div>
-        </footer>
+    return `
+     <footer>
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="logo">Lumi<span style="color:var(--rose); font-style:italic">ère</span></div>
 
+                <div class="footer-socials">
+                    <a class="social-btn" href="https://x.com" target="_blank" aria-label="Twitter">𝕏</a>
+                    <a class="social-btn" href="https://www.linkedin.com" target="_blank" aria-label="LinkedIn">in</a>
+                    <a class="social-btn" href="https://www.instagram.com" target="_blank" aria-label="Instagram">📸</a>
+                    <a class="social-btn" href="https://www.youtube.com" target="_blank" aria-label="YouTube">▶</a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">Face Serums</a></li>
+                    <li><a href="#">Moisturizers</a></li>
+                    <li><a href="#">Cleansers</a></li>
+                    <li><a href="#">Eye Care</a></li>
+                    <li><a href="#">Bundles</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Ingredients</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Skin Quiz</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2025 Lumière Skincare. All rights reserved.</span>
+            <span>Made with love for every skin story.</span>
+        </div>
+    </footer>
     `;
-    }
+}
 
-    document
-        .getElementById("navbar")
-        .innerHTML = loadNavbar();
-    document
-        .getElementById("footer")
-        .innerHTML = loadFooter();
-    document
+document.getElementById("navbar").innerHTML = loadNavbar();
+document.getElementById("footer").innerHTML = loadFooter();
 
 });
