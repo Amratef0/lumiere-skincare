@@ -10,9 +10,7 @@ app = Flask(
 )
 app.secret_key = "lumiere_secret_key_2025"
 
-# ─────────────────────────────────────────
 #  DB CONNECTION
-# ─────────────────────────────────────────
 def get_db():
     return mysql.connector.connect(
         host="mysql.railway.internal",
@@ -23,9 +21,7 @@ def get_db():
     )
 
 
-# ─────────────────────────────────────────
 #  HELPER: get or create cart
-# ─────────────────────────────────────────
 def get_cart_id(db):
     cursor = db.cursor(dictionary=True)
 
@@ -52,9 +48,7 @@ def get_cart_id(db):
         return cursor.lastrowid
 
 
-# ─────────────────────────────────────────
 #  HOME
-# ─────────────────────────────────────────
 @app.route("/")
 def index():
     db = get_db()
@@ -70,9 +64,7 @@ def index():
     return render_template("index.html", products=products)
 
 
-# ─────────────────────────────────────────
 #  SHOP
-# ─────────────────────────────────────────
 @app.route("/shop")
 def shop():
     db = get_db()
@@ -80,7 +72,6 @@ def shop():
 
     category_filter = request.args.get("category", "all")
 
-    # جيب كل الكاتيجوريز عشان الفلتر
     cursor.execute("SELECT name FROM categories ORDER BY name")
     categories = [row["name"] for row in cursor.fetchall()]
 
@@ -103,9 +94,7 @@ def shop():
     return render_template("shop.html", products=products, categories=categories)
 
 
-# ─────────────────────────────────────────
 #  PRODUCT DETAIL
-# ─────────────────────────────────────────
 @app.route("/product/<int:product_id>")
 def product(product_id):
     db = get_db()
@@ -124,9 +113,7 @@ def product(product_id):
     return render_template("product.html", product=product)
 
 
-# ─────────────────────────────────────────
 #  ADD TO CART
-# ─────────────────────────────────────────
 @app.route("/add-to-cart", methods=["POST"])
 def add_to_cart():
     product_id = request.form.get("product_id")
@@ -134,7 +121,6 @@ def add_to_cart():
     cart_id = get_cart_id(db)
     cursor = db.cursor()
 
-    # لو الأيتم موجود زود الكمية، لو لأ زيده
     cursor.execute(
         "SELECT quantity FROM cart_items WHERE cart_id=%s AND product_id=%s",
         (cart_id, product_id)
@@ -155,9 +141,7 @@ def add_to_cart():
     return redirect(url_for("cart"))
 
 
-# ─────────────────────────────────────────
 #  UPDATE CART (زيادة / نقصان)
-# ─────────────────────────────────────────
 @app.route("/update-cart", methods=["POST"])
 def update_cart():
     product_id = request.form.get("product_id")
@@ -192,9 +176,7 @@ def update_cart():
     return redirect(url_for("cart"))
 
 
-# ─────────────────────────────────────────
 #  CART PAGE
-# ─────────────────────────────────────────
 @app.route("/cart")
 def cart():
     db = get_db()
@@ -215,9 +197,7 @@ def cart():
     return render_template("cart.html", items=items, total=total, count=count)
 
 
-# ─────────────────────────────────────────
 #  CHECKOUT  GET
-# ─────────────────────────────────────────
 @app.route("/checkout", methods=["GET"])
 def checkout():
     db = get_db()
@@ -245,9 +225,7 @@ def checkout():
                            error="")
 
 
-# ─────────────────────────────────────────
 #  CHECKOUT  POST  → place order
-# ─────────────────────────────────────────
 @app.route("/checkout", methods=["POST"])
 def place_order():
     name    = request.form.get("name", "").strip()
@@ -294,9 +272,8 @@ def place_order():
     shipping = 0 if subtotal >= 700 else 8
     total    = subtotal + shipping
 
-    user_id = session.get("user_id")  # None لو جست
+    user_id = session.get("user_id")  
 
-    # ── insert order ──
     cursor2 = db.cursor()
     cursor2.execute("""
         INSERT INTO orders (user_id, total_price, address, status)
@@ -304,7 +281,6 @@ def place_order():
     """, (user_id, total, full_address))
     order_id = cursor2.lastrowid
 
-    # ── insert order items ──
     for item in items:
         cursor2.execute("""
             INSERT INTO order_items (order_id, product_id, quantity, price_at_purchase)
@@ -328,9 +304,7 @@ def place_order():
     return render_template("thankyou.html", order=order, items=items)
 
 
-# ─────────────────────────────────────────
 #  REGISTER
-# ─────────────────────────────────────────
 @app.route("/register", methods=["GET"])
 def register_page():
     return render_template("register.html", error="")
@@ -365,9 +339,7 @@ def register():
     return redirect(url_for("login_page"))
 
 
-# ─────────────────────────────────────────
 #  LOGIN
-# ─────────────────────────────────────────
 @app.route("/login", methods=["GET"])
 def login_page():
     return render_template("login.html", error="")
@@ -392,24 +364,19 @@ def login():
     session["user_id"]   = user["user_id"]
     session["user_name"] = user["name"]
 
-    # أدمن لو إيميله admin@lumiere.com
     session["is_admin"] = 1 if email == "admin@lumiere.com" else 0
 
     return redirect(url_for("index"))
 
 
-# ─────────────────────────────────────────
 #  LOGOUT
-# ─────────────────────────────────────────
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("index"))
 
 
-# ─────────────────────────────────────────
 #  ADMIN — list products
-# ─────────────────────────────────────────
 @app.route("/admin")
 def admin():
     if not session.get("is_admin"):
@@ -429,9 +396,7 @@ def admin():
     return render_template("admin.html", products=products)
 
 
-# ─────────────────────────────────────────
 #  ADMIN — product form  (Add)
-# ─────────────────────────────────────────
 @app.route("/product-form", methods=["GET"])
 def product_form_add():
     if not session.get("is_admin"):
@@ -452,7 +417,6 @@ def product_form_add_post():
     db = get_db()
     cursor = db.cursor(dictionary=True)
 
-    # جيب أو أنشئ الكاتيجوري
     cursor.execute("SELECT category_id FROM categories WHERE name = %s", (category,))
     cat = cursor.fetchone()
     if cat:
@@ -471,9 +435,7 @@ def product_form_add_post():
     return redirect(url_for("admin"))
 
 
-# ─────────────────────────────────────────
 #  ADMIN — product form  (Edit)
-# ─────────────────────────────────────────
 @app.route("/product-form/<int:product_id>", methods=["GET"])
 def product_form_edit(product_id):
     if not session.get("is_admin"):
@@ -525,9 +487,7 @@ def product_form_edit_post(product_id):
     return redirect(url_for("admin"))
 
 
-# ─────────────────────────────────────────
 #  ADMIN — delete product
-# ─────────────────────────────────────────
 @app.route("/delete-product", methods=["POST"])
 def delete_product():
     if not session.get("is_admin"):
@@ -542,9 +502,7 @@ def delete_product():
     return redirect(url_for("admin"))
 
 
-# ─────────────────────────────────────────
 #  CONTACT
-# ─────────────────────────────────────────
 @app.route("/contact", methods=["GET"])
 def contact():
     return render_template("contact.html")
@@ -569,16 +527,12 @@ def contact_post():
     return redirect(url_for("contact"))
 
 
-# ─────────────────────────────────────────
 #  ABOUT
-# ─────────────────────────────────────────
 @app.route("/about")
 def about():
     return render_template("about.html")
 
 
-# ─────────────────────────────────────────
 #  RUN
-# ─────────────────────────────────────────
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
