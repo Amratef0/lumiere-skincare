@@ -58,7 +58,7 @@ def index():
     FROM products p
     JOIN categories c ON p.category_id = c.category_id
     ORDER BY p.product_id DESC
-    LIMIT 8
+    LIMIT 4
 """)
     products = cursor.fetchall()
     db.close()
