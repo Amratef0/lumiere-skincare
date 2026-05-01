@@ -305,11 +305,6 @@ def place_order():
     return render_template("thankyou.html", order=order, items=items)
 
 
-#  REGISTER
-@app.route("/register", methods=["GET"])
-def register_page():
-    return render_template("register.html", error="")
-
 @app.route("/register", methods=["POST"])
 def register():
     name     = request.form.get("name", "").strip()
@@ -317,33 +312,48 @@ def register():
     password = request.form.get("password", "").strip()
     confirm  = request.form.get("confirm", "").strip()
 
+    # ================= VALIDATION =================
     if not all([name, email, password, confirm]):
         return render_template("register.html", error="All fields are required.")
+
+    # name validation (NO numbers)
+    if not name.replace(" ", "").isalpha():
+        return render_template("register.html", error="Name must contain only letters.")
+
+    # email validation
+    email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    if not re.match(email_regex, email):
+        return render_template("register.html", error="Invalid email format.")
+
+    # password check
     if password != confirm:
         return render_template("register.html", error="Passwords do not match.")
+
     if len(password) < 6:
         return render_template("register.html", error="Password must be at least 6 characters.")
 
+    # ================= DB =================
     db = get_db()
     cursor = db.cursor(dictionary=True)
+
     cursor.execute("SELECT user_id FROM users WHERE email = %s", (email,))
     if cursor.fetchone():
         db.close()
         return render_template("register.html", error="Email already registered.")
 
+    #  HASH PASSWORD (مهم جدًا)
+    hashed_password = generate_password_hash(password)
+
     cursor.execute(
         "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)",
-        (name, email, password)
+        (name, email, hashed_password)
     )
+
     db.commit()
     db.close()
+
     return redirect(url_for("login_page"))
 
-
-#  LOGIN
-@app.route("/login", methods=["GET"])
-def login_page():
-    return render_template("login.html", error="")
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -352,20 +362,21 @@ def login():
 
     db = get_db()
     cursor = db.cursor(dictionary=True)
-    cursor.execute(
-        "SELECT user_id, name, email FROM users WHERE email=%s AND password=%s",
-        (email, password)
-    )
+
+    cursor.execute("SELECT user_id, name, email, password FROM users WHERE email=%s", (email,))
     user = cursor.fetchone()
     db.close()
 
     if not user:
         return render_template("login.html", error="Invalid email or password.")
 
+    #  check hashed password
+    if not check_password_hash(user["password"], password):
+        return render_template("login.html", error="Invalid email or password.")
+
     session["user_id"]   = user["user_id"]
     session["user_name"] = user["name"]
-
-    session["is_admin"] = 1 if email == "admin@lumiere.com" else 0
+    session["is_admin"]  = 1 if email == "admin@lumiere.com" else 0
 
     return redirect(url_for("index"))
 
