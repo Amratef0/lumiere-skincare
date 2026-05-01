@@ -1,255 +1,265 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link
-            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
-            rel="stylesheet"/>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-        <script src="{{ url_for('static', filename='js/main.js') }}" defer="defer"></script>
-        <script src="{{ url_for('static', filename='js/base.js') }}" defer="defer"></script>
-        <script src="{{ url_for('static', filename='js/checkout.js') }}" defer="defer"></script>
-        <title>Order Confirmed — Lumière Skincare</title>
-    </head>
-    <body data-user="{{ session.get('user_name') or '' }}">
-        <!-- NAVBAR -->
-        <div id="navbar"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <script
+      src="{{ url_for('static', filename='js/main.js') }}"
+      defer="defer"
+    ></script>
+    <script
+      src="{{ url_for('static', filename='js/base.js') }}"
+      defer="defer"
+    ></script>
+    <script
+      src="{{ url_for('static', filename='js/checkout.js') }}"
+      defer="defer"
+    ></script>
+    <title>Order Confirmed — Lumière Skincare</title>
+  </head>
+  <body data-user="{{ session.get('user_name') or '' }}">
+    <!-- NAVBAR -->
+    <div id="navbar"></div>
 
-        <!-- ── PAGE HERO ── -->
-        <div class="page-hero">
-            <div class="section-label">Almost There</div>
-            <h1 class="section-title">Secure
-                <em>Checkout</em>
-            </h1>
-            <p>Fill in your details below and we'll take care of the rest.</p>
-        </div>
+    <!-- ── PAGE HERO ── -->
+    <div class="page-hero">
+      <div class="section-label">Almost There</div>
+      <h1 class="section-title">
+        Secure
+        <em>Checkout</em>
+      </h1>
+      <p>Fill in your details below and we'll take care of the rest.</p>
+    </div>
 
-        <!-- ── STEP INDICATOR ── -->
-        <div class="chk-steps">
-            <div class="chk-step done">
-                <div class="chk-step-dot">✓</div>
-                <span>Cart</span>
-            </div>
-            <div class="chk-step-line done"></div>
-            <div class="chk-step active">
-                <div class="chk-step-dot">2</div>
-                <span>Checkout</span>
-            </div>
-            <div class="chk-step-line"></div>
-            <div class="chk-step">
-                <div class="chk-step-dot">3</div>
-                <span>Confirmation</span>
-            </div>
-        </div>
+    <!-- ── STEP INDICATOR ── -->
+    <div class="chk-steps">
+      <div class="chk-step done">
+        <div class="chk-step-dot">✓</div>
+        <span>Cart</span>
+      </div>
+      <div class="chk-step-line done"></div>
+      <div class="chk-step active">
+        <div class="chk-step-dot">2</div>
+        <span>Checkout</span>
+      </div>
+      <div class="chk-step-line"></div>
+      <div class="chk-step">
+        <div class="chk-step-dot">3</div>
+        <span>Confirmation</span>
+      </div>
+    </div>
 
-        <!-- ── CHECKOUT SECTION ── -->
-        <section class="chk-section">
-            <div class="chk-layout">
+    <!-- ── CHECKOUT SECTION ── -->
+    <section class="chk-section">
+      <div class="chk-layout">
+        <!-- ── LEFT: Checkout Form ── -->
+        <div class="chk-form-col">
+          <div class="auth-global-error {% if error %}show{% endif %}">
+            {{ error }}
+          </div>
+          <form id="checkoutForm" action="/checkout" method="POST">
+            <!-- Contact Information -->
+            <div class="chk-block">
+              <h3 class="chk-block-title">
+                <span class="chk-block-num">1</span>
+                Contact Information
+              </h3>
 
-                <!-- ── LEFT: Checkout Form ── -->
-                <div class="chk-form-col">
-                    <div class="auth-global-error {% if error %}show{% endif %}">
-                        {{ error }}
-                    </div>
-                    <form id="checkoutForm" action="/checkout" method="POST">
-
-                        <!-- Contact Information -->
-                        <div class="chk-block">
-                            <h3 class="chk-block-title">
-                                <span class="chk-block-num">1</span>
-                                Contact Information
-                            </h3>
-
-                            <div class="form-row">
-                                <!-- Full Name -->
-                                <div class="form-group">
-                                    <label class="form-label" for="chk-name">Full Name *</label>
-                                    <input
-                                        class="form-input"
-                                        id="chk-name"
-                                        name="name"
-                                        type="text"
-                                        placeholder="e.g. Nourhan Amr"
-                                        autocomplete="name"/>
-                                    <span class="form-error" id="chk-name-error"></span>
-                                </div>
-
-                                <!-- Email -->
-                                <div class="form-group">
-                                    <label class="form-label" for="chk-email">Email Address *</label>
-                                    <input
-                                        class="form-input"
-                                        id="chk-email"
-                                        name="email"
-                                        type="email"
-                                        placeholder="you@example.com"
-                                        autocomplete="email"/>
-                                    <span class="form-error" id="chk-email-error"></span>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <!-- Phone -->
-                                <div class="form-group">
-                                    <label class="form-label" for="chk-phone">Phone Number *</label>
-                                    <input
-                                        class="form-input"
-                                        id="chk-phone"
-                                        name="phone"
-                                        type="tel"
-                                        placeholder="+20 10 1234 5678"
-                                        autocomplete="tel"/>
-                                    <span class="form-error" id="chk-phone-error"></span>
-                                </div>
-                                <!-- spacer on desktop -->
-                                <div class="form-group chk-spacer"></div>
-                            </div>
-                        </div>
-
-                        <!-- Delivery Address -->
-                        <div class="chk-block">
-                            <h3 class="chk-block-title">
-                                <span class="chk-block-num">2</span>
-                                Delivery Address
-                            </h3>
-
-                            <div class="form-row">
-                                <!-- Street Address — full width -->
-                                <div class="form-group full">
-                                    <label class="form-label" for="chk-address">Street Address *</label>
-                                    <input
-                                        class="form-input"
-                                        id="chk-address"
-                                        name="address"
-                                        type="text"
-                                        placeholder="123 Rose Garden Lane, Apt 4B"
-                                        autocomplete="street-address"/>
-                                    <span class="form-error" id="chk-address-error"></span>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <!-- City -->
-                                <div class="form-group">
-                                    <label class="form-label" for="chk-city">City *</label>
-                                    <input
-                                        class="form-input"
-                                        id="chk-city"
-                                        name="city"
-                                        type="text"
-                                        placeholder="Cairo"
-                                        autocomplete="address-level2"/>
-                                    <span class="form-error" id="chk-city-error"></span>
-                                </div>
-
-                                <!-- ZIP / Postal Code -->
-                                <div class="form-group">
-                                    <label class="form-label" for="chk-zip">ZIP / Postal Code *</label>
-                                    <input
-                                        class="form-input"
-                                        id="chk-zip"
-                                        name="zip"
-                                        type="text"
-                                        placeholder="75008"
-                                        autocomplete="postal-code"/>
-                                    <span class="form-error" id="chk-zip-error"></span>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <!-- Country -->
-                                <div class="form-group full">
-                                    <label class="form-label" for="chk-country">Country *</label>
-                                    <select
-                                        class="form-select form-input"
-                                        id="chk-country"
-                                        name="country"
-                                        autocomplete="country">
-                                        <option value="">— Select your country —</option>
-                                        <option value="US">United States</option>
-                                        <option value="GB">United Kingdom</option>
-                                        <option value="FR">France</option>
-                                        <option value="DE">Germany</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="AU">Australia</option>
-                                        <option value="JP">Japan</option>
-                                        <option value="AE">United Arab Emirates</option>
-                                        <option value="SA">Saudi Arabia</option>
-                                        <option value="EG">Egypt</option>
-                                        <option value="OTHER">Other</option>
-                                    </select>
-                                    <span class="form-error" id="chk-country-error"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Submit -->
-                        <button type="submit" class="btn-primary chk-submit-btn" id="chk-submit-btn">
-                            Place Order 
-                        </button>
-                        <p class="chk-submit-note">
-                             Your information is encrypted and never shared with third parties.
-                        </p>
-
-                    </form>
+              <div class="form-row">
+                <!-- Full Name -->
+                <div class="form-group">
+                  <label class="form-label" for="chk-name">Full Name *</label>
+                  <input
+                    class="form-input"
+                    id="chk-name"
+                    name="name"
+                    type="text"
+                    placeholder="e.g. Nourhan Amr"
+                    autocomplete="name"
+                  />
+                  <span class="form-error" id="chk-name-error"></span>
                 </div>
 
-                <!-- ── RIGHT: Order Summary ── -->
-                <div >
-                    <div class="cart-summary-card">
-                        <h3 class="cart-summary-title">Order Summary</h3>
+                <!-- Email -->
+                <div class="form-group">
+                  <label class="form-label" for="chk-email"
+                    >Email Address *</label
+                  >
+                  <input
+                    class="form-input"
+                    id="chk-email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                  />
+                  <span class="form-error" id="chk-email-error"></span>
+                </div>
+              </div>
 
-                        <!-- Dynamic items list -->
-                        <div id="chk-items-list" class="chk-items-list"></div>
+              <div class="form-row">
+                <!-- Phone -->
+                <div class="form-group">
+                  <label class="form-label" for="chk-phone"
+                    >Phone Number *</label
+                  >
+                  <input
+                    class="form-input"
+                    id="chk-phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="+20 10 1234 5678"
+                    autocomplete="tel"
+                  />
+                  <span class="form-error" id="chk-phone-error"></span>
+                </div>
+                <!-- spacer on desktop -->
+                <div class="form-group chk-spacer"></div>
+              </div>
+            </div>
 
-                        <div class="cart-summary-divider"></div>
+            <!-- Delivery Address -->
+            <div class="chk-block">
+              <h3 class="chk-block-title">
+                <span class="chk-block-num">2</span>
+                Delivery Address
+              </h3>
 
-                        <div class="cart-summary-row">
-                            <span>Subtotal</span>
-                            <span id="chk-subtotal">${{ subtotal }}</span>
-                        </div>
-                        <div class="cart-summary-row">
-                            <span>Shipping</span>
-                            <span id="chk-shipping">
-                                {% if shipping == 0 %}
-                                    🎉 Free
-                                {% else %}
-                                    ${{ shipping }}
-                                {% endif %}
-                            </span>
-                        </div>
-                        <div class="cart-summary-divider"></div>
-                        <div class="cart-summary-row cart-summary-total">
-                            <span>Total</span>
-                            <span id="chk-total">${{ total }}</span>
-                        </div>
+              <div class="form-row">
+                <!-- Street Address — full width -->
+                <div class="form-group full">
+                  <label class="form-label" for="chk-address"
+                    >Street Address *</label
+                  >
+                  <input
+                    class="form-input"
+                    id="chk-address"
+                    name="address"
+                    type="text"
+                    placeholder="123 Rose Garden Lane, Apt 4B"
+                    autocomplete="street-address"
+                  />
+                  <span class="form-error" id="chk-address-error"></span>
+                </div>
+              </div>
 
-                        <p class="cart-summary-note" id="chk-shipping-note"></p>
-
-                        <a href="cart.html" class="cart-continue-link" style="margin-top:.5rem;">
-                            ← Edit Cart
-                        </a>
-                    </div>
-
-                    <!-- Security badges -->
-                    <div class="chk-trust-row">
-                        <div class="chk-trust-badge">
-                            <span>🔒</span>
-                            SSL Secure</div>
-                        <div class="chk-trust-badge">
-                            <span>↩️</span>
-                            30-Day Returns</div>
-                        <div class="chk-trust-badge">
-                            <span>📦</span>
-                            Free Shipping $80+</div>
-                    </div>
+              <div class="form-row">
+                <!-- City -->
+                <div class="form-group">
+                  <label class="form-label" for="chk-city">City *</label>
+                  <input
+                    class="form-input"
+                    id="chk-city"
+                    name="city"
+                    type="text"
+                    placeholder="Cairo"
+                    autocomplete="address-level2"
+                  />
+                  <span class="form-error" id="chk-city-error"></span>
                 </div>
 
+                <!-- ZIP / Postal Code -->
+                <div class="form-group">
+                  <label class="form-label" for="chk-zip"
+                    >ZIP / Postal Code *</label
+                  >
+                  <input
+                    class="form-input"
+                    id="chk-zip"
+                    name="zip"
+                    type="text"
+                    placeholder="75008"
+                    autocomplete="postal-code"
+                  />
+                  <span class="form-error" id="chk-zip-error"></span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <!-- Country -->
+                <div class="form-group full">
+                  <label class="form-label" for="chk-country">Country *</label>
+                  <select
+                    class="form-select form-input"
+                    id="chk-country"
+                    name="country"
+                    autocomplete="country"
+                  >
+                    <option value="">— Select your country —</option>
+                    <option value="US">United States</option>
+                    <option value="GB">United Kingdom</option>
+                    <option value="FR">France</option>
+                    <option value="DE">Germany</option>
+                    <option value="CA">Canada</option>
+                    <option value="AU">Australia</option>
+                    <option value="JP">Japan</option>
+                    <option value="AE">United Arab Emirates</option>
+                    <option value="SA">Saudi Arabia</option>
+                    <option value="EG">Egypt</option>
+                    <option value="OTHER">Other</option>
+                  </select>
+                  <span class="form-error" id="chk-country-error"></span>
+                </div>
+              </div>
             </div>
-        </section>
 
-        <div id="footer"></div>
+            <!-- Submit -->
+            <button
+              type="submit"
+              class="btn-primary chk-submit-btn"
+              id="chk-submit-btn"
+            >
+              Place Order
+            </button>
+            <p class="chk-submit-note">
+              Your information is encrypted and never shared with third parties.
+            </p>
+          </form>
+        </div>
 
-    </body>
+        <!-- ── RIGHT: Order Summary ── -->
+        <div>
+          <div class="cart-summary-card">
+            <h3 class="cart-summary-title">Order Summary</h3>
+
+            <!-- Dynamic items list -->
+            <div id="chk-items-list" class="chk-items-list"></div>
+
+            <div class="cart-summary-divider"></div>
+
+            <div class="cart-summary-row">
+              <span>Subtotal</span>
+              <span id="chk-subtotal">${{ subtotal }}</span>
+            </div>
+            <div class="cart-summary-row">
+              <span>Shipping</span>
+              <span id="chk-shipping">
+                {% if shipping == 0 %} 🎉 Free {% else %} ${{ shipping }} {%
+                endif %}
+              </span>
+            </div>
+            <div class="cart-summary-divider"></div>
+            <div class="cart-summary-row cart-summary-total">
+              <span>Total</span>
+              <span id="chk-total">${{ total }}</span>
+            </div>
+
+            <p class="cart-summary-note" id="chk-shipping-note"></p>
+          </div>
+
+          <!-- Security badges -->
+        </div>
+      </div>
+    </section>
+
+    <div id="footer"></div>
+  </body>
 </html>

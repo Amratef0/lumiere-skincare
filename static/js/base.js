@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return `
       <nav>
-        <div class="logo">Lumi<span>ère</span></div>
+        <a href="/" class="logo">Lumi<span>ère</span></a>
 
         <ul class="nav-links">
           <li><a href="/">Home</a></li>
