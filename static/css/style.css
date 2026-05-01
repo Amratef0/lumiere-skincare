@@ -3069,3 +3069,24 @@ label[for="login-password"] {
     gap: 3rem;
   }
 } 
+/* ── BENEFITS FIX ── */
+.benefits-float {
+    right: 1rem;
+}
+
+.benefits {
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .benefits-image {
+        aspect-ratio: 3/2;
+        max-height: 300px;
+    }
+
+    .benefits-float {
+        right: 0.5rem;
+        bottom: 1rem;
+        min-width: 130px;
+    }
+}
