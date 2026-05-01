@@ -2960,7 +2960,7 @@ label[for="login-password"] {
     .footer-top {
         grid-template-columns: 1fr;
         gap: 2rem;
-
+        
     }
     section {
         padding: 4rem 5%;
@@ -3015,32 +3015,4 @@ label[for="login-password"] {
 
 .auth-global-error.show {
     display: block;
-}
-* {
-  box-sizing: border-box;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-.hero {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-@media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-  }
-
-  nav ul {
-    flex-direction: column;
-  }
 }
