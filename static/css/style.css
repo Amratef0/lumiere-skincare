@@ -2960,6 +2960,7 @@ label[for="login-password"] {
     .footer-top {
         grid-template-columns: 1fr;
         gap: 2rem;
+        margin-top: 300px;
     }
     section {
         padding: 4rem 5%;
