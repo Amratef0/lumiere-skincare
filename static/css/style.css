@@ -3035,3 +3035,53 @@ label[for="login-password"] {
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 992px) {
+  .hero {
+    grid-template-columns: 1fr;
+    height: auto;
+    padding-bottom: 3rem;
+  }
+
+  .hero-right {
+    height: 60vh;
+  }
+
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-left {
+    padding: 2rem 1.5rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+} 
+@media (max-width: 992px) {
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+} 
+@media (max-width: 992px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
