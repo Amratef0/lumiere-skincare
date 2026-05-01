@@ -5,8 +5,8 @@ import os
 
 app = Flask(
     __name__,
-    template_folder="web_final_project/templates",
-    static_folder="web_final_project/static"
+    template_folder="templates",
+    static_folder="static"
 )
 app.secret_key = "lumiere_secret_key_2025"
 
