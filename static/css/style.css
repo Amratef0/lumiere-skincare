@@ -3069,15 +3069,3 @@ label[for="login-password"] {
     gap: 3rem;
   }
 } 
-@media (max-width: 768px) {
-  .benefits-image {
-    aspect-ratio: auto;
-    height: 300px; /* أو 250 حسب الشكل اللي انت عايزه */
-  }
-
-  .benefits-image img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-}
