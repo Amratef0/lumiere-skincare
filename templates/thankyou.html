@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+            rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <script src="{{ url_for('static', filename='js/main.js') }}" defer="defer"></script>
+        <script src="{{ url_for('static', filename='js/base.js') }}" defer="defer"></script>
+        <title>Order Confirmed — Lumière Skincare</title>
+    </head>
+     <body data-user="{{ session.get('user_name') or '' }}">
+        <!-- NAVBAR -->
+        <div id="navbar"></div>
+
+        <!-- ── STEP INDICATOR ── -->
+        <div class="chk-steps">
+            <div class="chk-step done">
+                <div class="chk-step-dot">✓</div>
+                <span>Cart</span>
+            </div>
+            <div class="chk-step-line done"></div>
+            <div class="chk-step done">
+                <div class="chk-step-dot">✓</div>
+                <span>Checkout</span>
+            </div>
+            <div class="chk-step-line done"></div>
+            <div class="chk-step active">
+                <div class="chk-step-dot">3</div>
+                <span>Confirmation</span>
+            </div>
+        </div>
+
+        <!-- ── THANK YOU SECTION ── -->
+        <section class="ty-section">
+
+            <!-- Animated confirmation card -->
+            <div class="ty-card">
+
+                <!-- Icon -->
+                <div class="ty-icon">🌸</div>
+
+                <!-- Heading -->
+                <h1 class="ty-heading">Thank You,
+                    <em>{{ order.name.split(' ')[0] }}</em>!</h1>
+                <p class="ty-subheading">
+                    Your order has been placed and is on its way to being packed with love. A
+                    confirmation email will be sent to
+                    <strong>{{ order.email }}</strong>.
+                </p>
+
+                <!-- Order number badge -->
+                <div class="ty-order-badge">
+                    <span class="ty-order-label">Order Number</span>
+                    <span class="ty-order-num">LMR-{{ order.id }}</span>
+                </div>
+
+                <!-- Order details grid -->
+                <div class="ty-details-grid" id="ty-details-grid">
+                    <div class="ty-detail-item">
+                        <div class="ty-detail-icon">📅</div>
+                        <div>
+                            <div class="ty-detail-label">Order Date</div>
+                            <div class="ty-detail-value">{{ order.date }}</div>
+                        </div>
+                    </div>
+                    <div class="ty-detail-item">
+                        <div class="ty-detail-icon">📍</div>
+                        <div>
+                            <div class="ty-detail-label">Shipping To</div>
+                            <div class="ty-detail-value">{{ order.address }}</div>
+                        </div>
+                    </div>
+                    <div class="ty-detail-item">
+                        <div class="ty-detail-icon">📦</div>
+                        <div>
+                            <div class="ty-detail-label">Estimated Delivery</div>
+                            <div class="ty-detail-value">3–7 Business Days</div>
+                        </div>
+                    </div>
+                    <div class="ty-detail-item">
+                        <div class="ty-detail-icon">💳</div>
+                        <div>
+                            <div class="ty-detail-label">Order Total</div>
+                            <div class="ty-detail-value">${{ order.total }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items summary -->
+                <div class="ty-items-wrap" id="ty-items-wrap">
+                    <div class="ty-items-title">Items Ordered</div>
+                    <div class="ty-items-list">
+
+                        {% for item in items %}
+                            <div class="ty-item-row">
+
+                                <img
+                                    class="ty-item-thumb"
+                                    src="/static/images/products/{{ item.image }}"
+                                    alt="{{ item.name }}">
+
+                                <div class="ty-item-meta">
+                                    <div class="ty-item-name">{{ item.name }}</div>
+                                    <div class="ty-item-qty">Qty:
+                                        {{ item.qty }}</div>
+                                </div>
+
+                                <div class="ty-item-price">
+                                    ${{ item.price * item.qty }}
+                                </div>
+
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <!-- CTA buttons -->
+                <div class="ty-actions">
+                    <a href="/shop" class="btn-primary">Continue Shopping</a>
+                    <a href="/" class="btn-outline">Back to Home</a>
+                </div>
+
+            </div>
+
+            <!-- Decorative promise strip -->
+            <div class="ty-promise-strip ">
+                <div class="ty-promise-item">
+                    <span>🌿</span>
+                    <div>
+                        <div class="ty-promise-title">Packed with Care</div>
+                        <div class="ty-promise-sub">Every order hand-packed in eco-friendly materials</div>
+                    </div>
+                </div>
+                <div class="ty-promise-item">
+                    <span>📦</span>
+                    <div>
+                        <div class="ty-promise-title">Fast Dispatch</div>
+                        <div class="ty-promise-sub">Ships within 1–2 business days from Paris</div>
+                    </div>
+                </div>
+                <div class="ty-promise-item">
+                    <span>↩️</span>
+                    <div>
+                        <div class="ty-promise-title">30-Day Returns</div>
+                        <div class="ty-promise-sub">Not happy? We'll make it right, no questions asked</div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <div id="footer"></div>
+
+    </body>
+</html>

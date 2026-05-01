@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+            rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="{{ url_for('static', filename='js/main.js') }}"defer="defer"></script>
+        <script src="{{ url_for('static', filename='js/base.js') }}"defer="defer"></script>
+         <script src="{{ url_for('static', filename='js/register.js') }}" defer="defer"></script>
+        <title>Lumière — Glow Naturally</title>
+    </head>
+    <body data-user="{{ session.get('user_name') or '' }}">
+        <!-- NAVBAR -->
+        <div id="navbar"></div>
+        <!-- ── AUTH WRAPPER ── -->
+<div class="auth-page">
+
+  <!-- Left panel — decorative brand side -->
+  <div class="auth-panel">
+    <div class="auth-panel-inner">
+      <a href="/" class="auth-panel-logo">Lumi<span>ère</span></a>
+      <h2 class="auth-panel-heading">Join the<br><em>Ritual</em></h2>
+      <p class="auth-panel-sub">Create your account to enjoy early access to new launches, personalised recommendations, and exclusive member perks.</p>
+      <div class="auth-panel-perks">
+        <div class="auth-perk-item">
+          <div class="auth-perk-dot"></div>
+          <div>
+            <div class="auth-perk-title">15% Off Your First Order</div>
+            <div class="auth-perk-desc">Automatically applied at checkout</div>
+          </div>
+        </div>
+        <div class="auth-perk-item">
+          <div class="auth-perk-dot"></div>
+          <div>
+            <div class="auth-perk-title">Early Access to Launches</div>
+            <div class="auth-perk-desc">New products, 24 hours early</div>
+          </div>
+        </div>
+        <div class="auth-perk-item">
+          <div class="auth-perk-dot"></div>
+          <div>
+            <div class="auth-perk-title">Saved Wishlist & Orders</div>
+            <div class="auth-perk-desc">Everything in one place</div>
+          </div>
+        </div>
+        <div class="auth-perk-item">
+          <div class="auth-perk-dot"></div>
+          <div>
+            <div class="auth-perk-title">Skincare Tips & Rituals</div>
+            <div class="auth-perk-desc">Monthly newsletters with real advice</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel — form -->
+  <div class="auth-form-side">
+    <div class="auth-card ">
+
+      <div class="auth-card-header">
+        <div class="auth-card-icon">✨</div>
+        <h1 class="auth-card-title">Create <em>Account</em></h1>
+        <p class="auth-card-sub">Already have an account? <a href="/login" class="auth-switch-link">Sign in →</a></p>
+      </div>
+
+      <!-- Global error banner -->
+      <div class="auth-global-error {% if error %}show{% endif %}">
+  {{ error }}
+</div>
+
+      <form id="registerForm" action="/register" method="POST">
+
+        <!-- Full Name -->
+        <div class="form-group" style="margin-bottom:1.2rem;">
+          <label class="form-label" for="reg-name">Full Name</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">👤</span>
+            <input
+              class="form-input auth-input"
+              id="reg-name" name="name"
+              type="text"
+              placeholder="e.g. Sara Muhamed"
+              autocomplete="name"
+            />
+          </div>
+          <span class="form-error" id="reg-name-error"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group" style="margin-bottom:1.2rem;">
+          <label class="form-label" for="reg-email">Email Address</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">✉</span>
+            <input
+              class="form-input auth-input"
+              id="reg-email" name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              autocapitalize="none"
+            />
+          </div>
+          <span class="form-error" id="reg-email-error"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group" style="margin-bottom:.5rem;">
+          <label class="form-label" for="reg-password">Password</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">🔒</span>
+            <input
+              class="form-input auth-input"
+              id="reg-password" name="password"
+              type="password"
+              placeholder="At least 6 characters"
+              autocomplete="new-password"
+            />
+            <button type="button" class="auth-toggle-pw" id="reg-toggle-pw" aria-label="Show password">
+              <span class="pw-eye">👁</span>
+            </button>
+          </div>
+          <span class="form-error" id="reg-password-error"></span>
+          <!-- Strength meter -->
+          <div class="auth-strength-wrap" id="reg-strength-wrap" style="display:none;">
+            <div class="auth-strength-bar">
+              <div class="auth-strength-fill" id="reg-strength-fill"></div>
+            </div>
+            <span class="auth-strength-label" id="reg-strength-label"></span>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group" style="margin-bottom:1.8rem;">
+          <label class="form-label" for="reg-confirm">Confirm Password</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">🔒</span>
+            <input
+              class="form-input auth-input"
+              id="reg-confirm" name="confirm"
+              type="password"
+              placeholder="Repeat your password"
+              autocomplete="new-password"
+            />
+            <button type="button" class="auth-toggle-pw" id="reg-toggle-confirm" aria-label="Show password">
+              <span class="pw-eye">👁</span>
+            </button>
+          </div>
+          <span class="form-error" id="reg-confirm-error"></span>
+        </div>
+
+        <!-- Terms checkbox -->
+        <div class="auth-remember" style="margin-bottom:1.8rem;">
+          <label class="auth-check-label">
+            <input type="checkbox" id="reg-terms" class="auth-checkbox" />
+            <span class="auth-check-box"></span>
+            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+          </label>
+          <span class="form-error" id="reg-terms-error" style="margin-top:.3rem;"></span>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-primary auth-submit-btn" id="reg-submit-btn">
+          Create Account
+        </button>
+
+      </form>
+
+      <!-- Divider -->
+      <div class="auth-divider"><span>or</span></div>
+
+      <a href="/shop" class="btn-outline auth-guest-btn">Continue as Guest</a>
+
+    </div>
+  </div>
+</div>
+<!-- FOOTER -->
+<div id="footer"></div>
+    </body></html>

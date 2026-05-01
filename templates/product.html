@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+            rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="{{ url_for('static', filename='js/main.js') }}" defer="defer"></script>
+        <script src="{{ url_for('static', filename='js/base.js') }}" defer="defer"></script>
+        <title>{{ product.name }} — Lumière</title>
+    </head>
+     <body data-user="{{ session.get('user_name') or '' }}">
+
+        <!-- NAVBAR -->
+        <div id="navbar"></div>
+
+        <!-- ── BREADCRUMB ── -->
+        <div class="pd-breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <a href="/shop">Shop</a>
+            <span>›</span>
+            <span>{{ product.name }}</span>
+        </div>
+
+        <!-- ── PRODUCT DETAIL ── -->
+        <section class="pd-section">
+            <div class="pd-grid">
+
+                <!-- Left: Product Image -->
+                <div class="pd-img-col ">
+                    <div class="pd-img-wrap">
+                        <img
+                            src="/static/images/products/{{ product.image }}"
+                            alt="{{ product.name }}"/>
+                        <span id="pd-badge" class="product-badge" style="display:none;"></span>
+                    </div>
+                </div>
+
+                <!-- Right: Product Info -->
+                <div class="pd-info-col  ">
+                    <div class="product-category" style="margin-bottom:.6rem;">{{ product.category }}</div>
+                    <h1 class="pd-name">{{ product.name }}</h1>
+                    <div class="pd-price-row">
+                        <span class="pd-price">${{ product.price }}</span>
+                        <span class="pd-stars">★★★★★
+                            <span style="color:var(--muted); font-size:.8rem;">(4.9)</span></span>
+                    </div>
+                    <p class="pd-desc">{{ product.description }}</p>
+
+                   
+
+                    <!-- Quantity + Add to Cart -->
+                   <div class="pd-actions">
+
+  <!-- ➖ -->
+  <form action="/add-to-cart" method="POST" style="display:inline;">
+    <input type="hidden" name="product_id" value="{{ product.id }}">
+    <input type="hidden" name="quantity" value="1">
+    <button type="submit" name="action" value="decrease" class="pd-qty-btn">−</button>
+  </form>
+
+  <span>{{qty or 1 }}</span>
+
+  <!-- ➕ -->
+  <form action="/add-to-cart" method="POST" style="display:inline;">
+    <input type="hidden" name="product_id" value="{{ product.id }}">
+    <input type="hidden" name="quantity" value="1">
+    <button type="submit" name="action" value="increase" class="pd-qty-btn">+</button>
+  </form>
+
+  <!-- Add -->
+  <form action="/add-to-cart" method="POST">
+    <input type="hidden" name="product_id" value="{{ product.id }}">
+    <input type="hidden" name="quantity" value="{{ qty or 1 }}">
+    <button type="submit" class="btn-primary">Add to Cart</button>
+  </form>
+
+</div>
+
+                    <!-- Trust badges -->
+                    <div class="pd-trust">
+                        <div class="pd-trust-item">
+                            <span>🌿</span>
+                            100% Vegan</div>
+                        <div class="pd-trust-item">
+                            <span>🐰</span>
+                            Cruelty Free</div>
+                        <div class="pd-trust-item">
+                            <span>📦</span>
+                            Free Shipping $80+</div>
+                        <div class="pd-trust-item">
+                            <span>↩️</span>
+                            30-Day Returns</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+       
+        <!-- Footer scripts -->
+        <div id="footer"></div>
+    </body>
+</html>

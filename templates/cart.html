@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+            rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="{{ url_for('static', filename='js/main.js') }}" defer="defer"></script>
+        <script src="{{ url_for('static', filename='js/base.js') }}" defer="defer"></script>
+        <title>Your Cart — Lumière Skincare</title>
+    </head>
+    <body data-user="{{ session.get('user_name') or '' }}">
+        <!-- NAVBAR -->
+        <div id="navbar"></div>
+
+        <!-- ── PAGE HERO ── -->
+        <div class="page-hero">
+            <div class="section-label">Your Selection</div>
+            <h1 class="section-title">Your
+                <em>Cart</em>
+            </h1>
+            <p>Review your items below, then proceed whenever you're ready.</p>
+        </div>
+
+        <!-- ── CART SECTION ── -->
+        <section class="cart-section">
+            <div class="cart-layout" id="cart-layout">
+
+                <!-- ── LEFT: Items ── -->
+                <div class="cart-items-col">
+
+                    <!-- Header row -->
+                    <div class="cart-col-header">
+                        <span>Product</span>
+                        <span>Price</span>
+                        <span>Qty</span>
+                        <span>Total</span>
+                        <span></span>
+                    </div>
+
+                    <!-- Dynamic item list -->
+                    {% if items %}
+
+                        {% for item in items %}
+                            <div class="cart-item">
+
+                              
+                                <img
+                                    class="cart-item-img"
+                                    src="/static/images/products/{{ item.image }}"
+                                    alt="{{ item.name }}">
+
+                                <!-- info -->
+                                <div class="cart-item-info">
+                                    <div class="cart-item-name">{{ item.name }}</div>
+                                </div>
+
+                              
+                                <div class="cart-item-price">
+                                    ${{ item.price }}
+                                </div>
+
+                                
+                                <div class="cart-item-qty-wrap">
+
+                                    <!-- ➖ -->
+                                    <form action="/update-cart" method="POST" style="display:inline;">
+                                        <input type="hidden" name="product_id" value="{{ item.product_id }}">
+                                        <input type="hidden" name="action" value="decrease">
+                                        <button type="submit">−</button>
+                                    </form>
+
+                                    
+                                    <span class="cart-item-qty-num">{{ item.qty }}</span>
+
+                                    <!-- ➕ -->
+                                    <form action="/update-cart" method="POST" style="display:inline;">
+                                        <input type="hidden" name="product_id" value="{{ item.product_id }}">
+                                        <input type="hidden" name="action" value="increase">
+                                        <button type="submit">+</button>
+                                    </form>
+
+                                </div>
+
+                                <!-- total -->
+                                <div class="cart-item-line-total">
+                                    ${{ item.price * item.qty }}
+                                </div>
+
+                            </div>
+                        {% endfor %}
+
+                    {% else %}
+
+                        <div class="cart-empty">
+                            <div class="cart-empty-icon">🛍</div>
+                            <h3>Your cart is empty</h3>
+                            <p>Looks like you haven't added anything yet.</p>
+                            <a href="/shop" class="btn-primary">Browse Collection</a>
+                        </div>
+
+                    {% endif %}
+
+                    <!-- Empty state (hidden when there are items) -->
+                    <div class="cart-empty" id="cart-empty" style="display:none;">
+                        <div class="cart-empty-icon">🛍</div>
+                        <h3>Your cart is empty</h3>
+                        <p>Looks like you haven't added anything yet — let's fix that.</p>
+                        <a
+                            href="/shop"
+                            class="btn-primary"
+                            style="margin-top:1.5rem; display:inline-block;">Browse Collection</a>
+                    </div>
+
+                </div>
+
+                <!-- ── RIGHT: Summary ── -->
+                <div class="cart-summary-col" id="cart-summary-col">
+                    <div class="cart-summary-card">
+                        <h3 class="cart-summary-title">Order Summary</h3>
+
+                        <div class="cart-summary-row">
+                            <span>Subtotal (<span>{{count}}</span>
+                                items)</span>
+
+                            <span>${{ total }}</span>
+
+                        </div>
+                        <div class="cart-summary-row">
+                            {% set shipping = 0 if total >= 700 or total == 0 else 
+                                8 %}
+                            {% set final = total + shipping %}
+                            <span>Shipping</span>
+                            <span>{{ shipping == 0 and '🎉 Free' or '$' ~ shipping }}</span>
+                        </div>
+                        <div class="cart-summary-divider"></div>
+                        <div class="cart-summary-row cart-summary-total">
+                            <span>Total</span>
+                            <span>${{ final }}</span>
+                        </div>
+
+                        <p class="cart-summary-note" id="summary-note"></p>
+
+                       {% if items %}
+   <button class="btn-primary cart-checkout-btn" id="cart-checkout-btn">
+                           <a href="/checkout" style="color:inherit;">
+                            Proceed to Checkout →
+                           </a>
+                        </button>
+{% else %}
+  <button class="btn-primary cart-checkout-btn" disabled>
+    Cart is Empty
+  </button>
+{% endif %}
+                        <a href="/shop" class="cart-continue-link">← Continue Shopping</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <div id="footer"></div>
+
+      
+
+    </body>
+</html>

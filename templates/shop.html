@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+            rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="{{ url_for('static', filename='js/main.js') }}" defer="defer"></script>
+        <script src="{{ url_for('static', filename='js/base.js') }}" defer="defer"></script>
+        <title>Lumière — Glow Naturally</title>
+    </head>
+    <body data-user="{{ session.get('user_name') or '' }}">
+        <!-- NAVBAR -->
+        <div id="navbar"></div>
+        <!-- ── PAGE HERO ── -->
+        <!-- ADDED: inner page banner with rose circle decoration -->
+        <div class="page-hero">
+            <div class="section-label">Our Collection</div>
+            <h1 class="section-title">Shop
+                <em>By Ritual</em>
+            </h1>
+            <p>Discover clean, botanical formulas — each crafted for a specific step in your
+                daily glow ritual.</p>
+        </div>
+        <!-- ── PRODUCTS + FILTER ── -->
+        <section class="products" id="products" style="background: var(--cream);">
+
+            <div class="filter-tabs ">
+                <!-- All -->
+                <a
+                    href="/shop?category=all"
+                    class="filter-tab {% if not request.args.get('category') or request.args.get('category') == 'all' %}active{% endif %}">
+                    All Products
+                </a>
+
+                <!-- Dynamic -->
+                {% for cat in categories %}
+                    <a
+                        href="/shop?category={{ cat|lower }}"
+                        class="filter-tab {% if request.args.get('category') == cat|lower %}active{% endif %}">
+                        {{ cat }}
+                    </a>
+                {% endfor %}
+
+            </div>
+
+           
+
+            {% if products %}
+
+                <div class="products-grid">
+                    {% for p in products %}
+                        <div class="product-card " data-id="{{ p.product_id }}" data-category="{{ p.category|lower }}">
+
+                            <div class="product-img-wrap">
+                                <img src="/static/images/products/{{ p.image_url }}" alt="{{ p.name }}">
+                            </div>
+
+                            <div class="product-info">
+                                <div class="product-category">{{ p.category }}</div>
+                                <div class="product-name">{{ p.name }}</div>
+
+                                <div class="product-footer">
+                                    <span class="product-price">${{ p.price }}</span>
+
+                                    <form action="/add-to-cart" method="POST">
+                                        <input type="hidden" name="product_id" value="{{ p.product_id }}">
+                                        <button type="submit" class="add-btn">Add to Bag</button>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <p style="text-align:center; padding:3rem;">No products available</p>
+            {% endif %}
+
+        </section>
+
+      
+        <!-- FOOTER -->
+        <div id="footer"></div>
+    </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+            rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="{{ url_for('static', filename='js/main.js') }}"defer="defer"></script>
+        <script src="{{ url_for('static', filename='js/base.js') }}"defer="defer"></script>
+        <script src="{{ url_for('static', filename='js/login.js') }}" defer="defer"></script>
+        <title>Lumière — Glow Naturally</title>
+    </head>
+     <body data-user="{{ session.get('user_name') or '' }}">
+        <!-- NAVBAR -->
+        <div id="navbar"></div>
+        
+
+  <!-- ── AUTH WRAPPER ── -->
+<div class="auth-page">
+
+  <!-- Left panel — decorative brand side -->
+  <div class="auth-panel">
+    <div class="auth-panel-inner">
+      <a href="/" class="auth-panel-logo">Lumi<span>ère</span></a>
+      <h2 class="auth-panel-heading">Welcome<br><em>Back</em></h2>
+      <p class="auth-panel-sub">Sign in to track your orders, save your wishlist, and unlock member-only offers.</p>
+      <div class="auth-panel-quotes">
+        <div class="auth-quote">
+          <p>"The Rose Glow Serum changed my skin completely."</p>
+          <span>— Layla M., Verified Customer</span>
+        </div>
+      </div>
+      <div class="auth-panel-badges">
+        <div class="auth-panel-badge">🌿 100% Vegan</div>
+        <div class="auth-panel-badge">🐰 Cruelty Free</div>
+        <div class="auth-panel-badge">✨ Clean Beauty</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel — form -->
+  <div class="auth-form-side">
+    <div class="auth-card ">
+
+      <div class="auth-card-header">
+        <div class="auth-card-icon">🌸</div>
+        <h1 class="auth-card-title">Sign <em>In</em></h1>
+        <p class="auth-card-sub">Don't have an account? <a href="/register" class="auth-switch-link">Create one →</a></p>
+      </div>
+
+      <!-- Global error banner (wrong credentials) -->
+      <div class="auth-global-error {% if error %}show{% endif %}" role="alert">
+  {{ error }}
+</div>
+
+      <form id="loginForm" action="/login" method="POST">
+
+        <!-- Email -->
+        <div class="form-group" style="margin-bottom:1.2rem;">
+          <label class="form-label" for="login-email">Email Address</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">✉</span>
+            <input
+              class="form-input auth-input"
+              id="login-email" name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              autocapitalize="none"
+            />
+          </div>
+          <span class="form-error" id="login-email-error"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group" style="margin-bottom:1.8rem;">
+          <label class="form-label" for="login-password">
+            Password
+            <a href="#" class="auth-forgot-link" id="forgot-link">Forgot password?</a>
+          </label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">🔒</span>
+            <input
+              class="form-input auth-input"
+              id="login-password" name="password"
+              type="password"
+              placeholder="Your password"
+              autocomplete="current-password"
+            />
+            <button type="button" class="auth-toggle-pw" id="login-toggle-pw" aria-label="Show password">
+              <span class="pw-eye">👁</span>
+            </button>
+          </div>
+          <span class="form-error" id="login-password-error"></span>
+        </div>
+
+        <!-- Remember me -->
+        <div class="auth-remember">
+          <label class="auth-check-label">
+            <input type="checkbox" id="login-remember" class="auth-checkbox" />
+            <span class="auth-check-box"></span>
+            Keep me signed in
+          </label>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-primary auth-submit-btn" id="login-submit-btn">
+          Sign In
+        </button>
+
+      </form>
+
+      <!-- Divider -->
+      <div class="auth-divider"><span>or</span></div>
+
+      <!-- Continue as guest -->
+      <a href="/shop" class="btn-outline auth-guest-btn">Continue as Guest</a>
+
+      <p class="auth-terms">
+        By signing in you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+
+<!--FOOTER-->
+        <div id="footer"></div>
+</body>
+</html>

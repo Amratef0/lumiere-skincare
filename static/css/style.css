@@ -1,0 +1,3017 @@
+:root {
+    --blush: #f5d9d0;
+    --rose: #e8b4a8;
+    --deep-rose: #d38275;
+    --cream: #fdf6f0;
+    --beige: #f0e6dc;
+    --text: #3a2e2b;
+    --muted: #8a7470;
+    --white: #ffffff;
+    --shadow: rgba(180,120,110,0.12);
+    --speed-fast: 0.2s;
+    --speed-mid: 0.35s;
+}
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+}
+/* ── NAV ─────────────────────────────────────────────── */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(253,246,240,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(232,180,168,0.25);
+    transition: box-shadow 0.3s;
+}
+/* ADDED: stronger shadow on scroll (toggled by JS) */
+nav.scrolled {
+    box-shadow: 0 4px 24px var(--shadow);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+}
+.nav-links a {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.3s;
+    position: relative;
+    padding-bottom: 2px;
+}
+/* ADDED: underline indicator for active page */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--deep-rose);
+    transition: width 0.3s;
+}
+.nav-links a.active,
+.nav-links a:hover {
+    color: var(--deep-rose);
+}
+.nav-links a.active::after,
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.cart-item-qty-wrap button {
+    padding: 4px 10px;
+    border: none;
+    background: var(--deep-rose);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ADDED: cart badge on nav CTA */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.nav-cart-btn {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 2.1rem;
+    color: var(--muted);
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+.nav-cart-btn:hover {
+    color: var(--deep-rose);
+}
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: var(--deep-rose);
+    color: white;
+    font-size: 0.6rem;
+    font-family: 'Jost', sans-serif;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.25s;
+}
+.cart-count.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.nav-cta {
+    background: var(--deep-rose);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 0.6rem 1.6rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+.nav-cta:hover {
+    background: #b56d62;
+    transform: translateY(-1px);
+}
+
+/* ADDED: Login / Register link in nav */
+.nav-login {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+    border: 1.5px solid var(--beige);
+    border-radius: 50px;
+    padding: 0.5rem 1.2rem;
+    font-family: 'Jost', sans-serif;
+    transition: border-color 0.3s, color 0.3s;
+}
+.nav-login:hover {
+    border-color: var(--deep-rose);
+    color: var(--deep-rose);
+}
+.logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--text);
+}
+.logo span {
+    font-style: italic;
+    color: var(--deep-rose);
+}
+
+/* ── HERO ── */
+
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--deep-rose);
+    margin-bottom: 1.8rem;
+}
+.hero-tag::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--deep-rose);
+}
+.hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    /* font-size: clamp(3rem, 5vw, 5.5rem);*/
+    font-size: clamp(2rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--text);
+}
+.hero h1 em {
+    font-style: italic;
+    color: var(--deep-rose);
+    display: block;
+}
+.hero-desc {
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    margin-top: 1rem;
+    /* font-size: 0.95rem; */
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 400px;
+}
+
+.hero-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.btn-primary {
+    background: var(--deep-rose);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 0.95rem 2.4rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 8px 24px rgba(201,125,114,.35);
+    text-decoration: none;
+}
+.btn-primary:hover {
+    background: #b56d62;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(201,125,114,.4);
+}
+.btn-ghost {
+    background: transparent;
+    border: none;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.3s, color 0.3s;
+}
+.btn-ghost:hover {
+    color: var(--deep-rose);
+    gap: 0.8rem;
+}
+.btn-ghost::after {
+    content: '→';
+    font-size: 1rem;
+}
+.hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    /* ← من 4rem */
+    padding-top: 1.5rem;
+    /* ← من 2rem */
+    border-top: 1px solid var(--beige);
+}
+.stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--deep-rose);
+}
+.stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.2rem;
+}
+
+.hero {
+    height: 90vh;
+    max-height: 90vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    padding-top: 95px;
+    padding-bottom: 0;
+
+}
+
+.hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* padding: 0 17% 0% 17%; */
+    padding: clamp(1rem, 5vw, 4rem);
+}
+
+.hero-right {
+    position: relative;
+    background: var(--blush);
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background-image: url("/static/images/image.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.hero-badge {
+    position: absolute;
+    bottom: 2.5rem;
+    left: -1.5rem;
+    background: var(--white);
+    border-radius: 18px;
+    padding: 0.8rem 1.4rem;
+    box-shadow: 0 12px 32px var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    animation: slideRight 1s 0.4s ease both;
+}
+.badge-icon {
+    font-size: 1.5rem;
+}
+.badge-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.badge-sub {
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+}
+.marquee-strip {
+
+    background: var(--deep-rose);
+    padding: 0.9rem 0;
+    overflow: hidden;
+}
+.marquee-inner {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 18s linear infinite;
+    white-space: nowrap;
+}
+.marquee-item {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.85);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.marquee-item::after {
+    content: '✦';
+    opacity: 0.6;
+}
+
+/* ── SECTION SHARED ── */
+section {
+    padding: 2rem 7% 5rem;
+}
+.section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--deep-rose);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--deep-rose);
+}
+.section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.2;
+}
+.section-title em {
+    font-style: italic;
+    color: var(--deep-rose);
+}
+.section-sub {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 480px;
+    margin-top: 0.8rem;
+}
+/* ── BENEFITS ── */
+.benefits {
+    background: var(--beige);
+    /* max-height: 80vh;*/
+}
+.benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+.benefits-image {
+    position: relative;
+    border-radius: 30px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    /* max-height: 80vh;*/
+}
+.benefits-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.benefits-float {
+    position: absolute;
+    bottom: 2rem;
+    right: -1.5rem;
+    background: white;
+    border-radius: 16px;
+    padding: 1.3rem 1.4rem;
+    box-shadow: 0 12px 32px var(--shadow);
+    min-width: 170px;
+}
+.float-percent {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    color: var(--deep-rose);
+}
+.float-text {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+.benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+}
+.benefit-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: var(--blush);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+.benefit-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    margin-bottom: 0.3rem;
+}
+.benefit-desc {
+    font-size: 0.87rem;
+    color: var(--muted);
+    line-height: 1.7;
+}
+/* ── NEWSLETTER ── */
+.newsletter {
+    background: var(--deep-rose);
+    padding: 5rem 7%;
+    text-align: center;
+}
+.newsletter-inner {
+    max-width: 560px;
+    margin: 0 auto;
+}
+.newsletter h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+}
+.newsletter h2 em {
+    font-style: italic;
+}
+.newsletter p {
+    color: rgba(255,255,255,.75);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+.newsletter-form {
+    display: flex;
+    gap: 0.6rem;
+    background: white;
+    border-radius: 50px;
+    padding: 0.4rem 0.4rem 0.4rem 1.4rem;
+    box-shadow: 0 12px 36px rgba(0,0,0,.12);
+}
+.newsletter-form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    background: transparent;
+}
+.newsletter-form input::placeholder {
+    color: var(--muted);
+}
+.newsletter-form button {
+    background: var(--deep-rose);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 0.8rem 1.8rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.newsletter-form button:hover {
+    background: #b56d62;
+}
+
+/* ── FOOTER ── */
+footer {
+    background: var(--text);
+    padding: 4rem 7% 2.5rem;
+    color: rgba(255,255,255,.6);
+}
+.footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.footer-brand .logo {
+    color: white;
+    font-size: 1.6rem;
+}
+.footer-brand p {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-top: 1rem;
+    color: rgba(255,255,255,.5);
+}
+.footer-socials {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+.social-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s;
+    text-decoration: none;
+    color: rgba(255,255,255,.7);
+}
+.social-btn:hover {
+    background: var(--deep-rose);
+    border-color: var(--deep-rose);
+}
+.footer-col h4 {
+    color: white;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+}
+.footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.footer-col a {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,.5);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.footer-col a:hover {
+    color: var(--rose);
+}
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    font-size: 0.78rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+/* ── PAGE HERO (inner pages) ────────────────────────── */
+/* ADDED: shared page banner used on Shop, About, Contact */
+.page-hero {
+    padding: 140px 7% 5rem;
+    background: var(--beige);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+.page-hero .section-label {
+    justify-content: center;
+}
+.page-hero .section-title {
+    text-align: center;
+}
+.page-hero p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 540px;
+    margin: 1rem auto 0;
+}
+
+/* ── PRODUCTS ───────────────────────────────────────── */
+.products {
+    background: var(--white);
+}
+.products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.view-all {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--deep-rose);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: gap 0.3s;
+}
+.view-all:hover {
+    gap: 0.7rem;
+}
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.8rem;
+}
+.product-card {
+    background: var(--cream);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform var(--speed-mid), box-shadow var(--speed-mid);
+    cursor: pointer;
+}
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px var(--shadow);
+}
+/* ADDED: hidden state for filter */
+.product-card.hidden {
+    display: none;
+}
+.product-img-wrap {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: var(--beige);
+}
+.product-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+.product-card:hover .product-img-wrap img {
+    transform: scale(1.06);
+}
+.product-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--deep-rose);
+    color: white;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+}
+.product-info {
+    padding: 1.3rem 1.3rem 1.5rem;
+}
+.product-category {
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+.product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    margin: 0.3rem 0 0.6rem;
+    color: var(--text);
+}
+.product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.product-price {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--deep-rose);
+}
+.add-btn {
+    background: var(--blush);
+    color: var(--text);
+    border: none;
+    border-radius: 50px;
+    padding: 0.45rem 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, transform 0.15s;
+    font-family: 'Jost', sans-serif;
+}
+.add-btn:hover {
+    background: var(--deep-rose);
+    color: white;
+}
+/* ADDED: quick pop animation when item added */
+.add-btn.adding {
+    transform: scale(.93);
+}
+
+/* ======================================================================================
+                                           SHOP PAGE
+====================================================================================== */
+
+/* ── FILTER TABS (shop page) ────────────────────────── */
+/* ADDED: category filter tabs on shop page */
+.filter-tabs {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+}
+.filter-tab {
+    padding: 0.5rem 1.3rem;
+    border-radius: 50px;
+    border: 1.5px solid var(--beige);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+.filter-tab:hover {
+    border-color: var(--rose);
+    color: var(--text);
+}
+.filter-tab.active {
+    background: var(--deep-rose);
+    border-color: var(--deep-rose);
+    color: white;
+}
+
+/* =========================================================
+   ADDED: Product Detail Page + Cart Page
+   ========================================================= */
+
+/* ── PRODUCT DETAIL ─────────────────────────────────────── */
+.pd-breadcrumb {
+    padding: 6.5rem 7% 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--white);
+}
+.pd-breadcrumb a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.pd-breadcrumb a:hover {
+    color: var(--deep-rose);
+}
+.pd-breadcrumb span {
+    color: var(--rose);
+}
+
+.pd-section {
+    background: var(--white);
+    padding: 2.5rem 7% 5rem;
+}
+.pd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+}
+
+/* Image column */
+/* .pd-img-col {} */
+.pd-img-wrap {
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: var(--beige);
+    position: relative;
+}
+.pd-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Info column */
+/* .pd-info-col {} */
+.pd-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+.pd-price-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.4rem;
+}
+.pd-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--deep-rose);
+}
+.pd-stars {
+    font-size: 0.9rem;
+    color: #e8a87c;
+}
+.pd-desc {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 1.8rem;
+}
+.pd-perks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2.2rem;
+    padding: 1.4rem 1.6rem;
+    background: var(--cream);
+    border-radius: 16px;
+    border: 1px solid var(--beige);
+}
+.pd-perk {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.5;
+}
+.pd-perk-dot {
+    color: var(--deep-rose);
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+}
+
+/* Qty + Add to Cart */
+.pd-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+.pd-qty-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1.5px solid var(--beige);
+    border-radius: 50px;
+    overflow: hidden;
+    background: var(--white);
+}
+.pd-qty-btn {
+    width: 40px;
+    height: 44px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text);
+    transition: background 0.2s, color 0.2s;
+    font-family: 'Jost', sans-serif;
+}
+.pd-qty-btn:hover {
+    background: var(--blush);
+    color: var(--deep-rose);
+}
+.pd-qty-num {
+    width: 44px;
+    text-align: center;
+    font-size: 0.95rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    color: var(--text);
+}
+.pd-add-btn {
+    flex: 1;
+    min-width: 180px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+/* Trust badges */
+.pd-trust {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+}
+.pd-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    padding: 0.65rem 0.9rem;
+    border-radius: 10px;
+    background: var(--cream);
+    border: 1px solid var(--beige);
+}
+.pd-trust-item span {
+    font-size: 1rem;
+}
+
+/* ======================================================================================================= */
+/*                                                ABOUT PAGE                                               */
+/* ======================================================================================================= */
+/* ADDED: all about page styles */
+.about-story {
+    background: var(--white);
+}
+.about-story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+.about-story-img {
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    position: relative;
+}
+.about-story-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.about-text p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 1.2rem;
+}
+.about-values {
+    background: var(--beige);
+}
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+.value-card {
+    background: var(--white);
+    border-radius: 22px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(232,180,168,.2);
+}
+.value-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px var(--shadow);
+}
+.value-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+.value-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.6rem;
+}
+.value-desc {
+    font-size: 0.87rem;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.about-ingredients {
+    background: var(--white);
+}
+.ingredients-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+}
+.ingredient-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.4rem;
+    border-radius: 16px;
+    border: 1px solid var(--beige);
+    background: var(--cream);
+}
+.ingredient-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--deep-rose);
+    flex-shrink: 0;
+    margin-top: 0.4rem;
+}
+.ingredient-name {
+    font-weight: 500;
+    font-size: 0.92rem;
+    margin-bottom: 0.3rem;
+}
+.ingredient-desc {
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.6;
+}
+/* ======================================================================================================= */
+/*                                               CONTACT PAGE                                              */
+/* ======================================================================================================= */
+/* ADDED: contact form  */
+.contact-section {
+    background: var(--white);
+}
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 5rem;
+    align-items: start;
+}
+.contact-info-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+}
+.contact-info-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.contact-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: var(--blush);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+.contact-info-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+}
+.contact-info-value {
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.5;
+}
+
+/* ADDED: Form styles — shared between contact & other forms */
+.form-card {
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 2.8rem;
+    border: 1px solid var(--beige);
+}
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+.form-group.full {
+    grid-column: 1 / -1;
+}
+.form-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+.form-input,
+.form-select,
+.form-textarea {
+    padding: 0.85rem 1.1rem;
+    border-radius: 12px;
+    border: 1.5px solid var(--beige);
+    background: var(--white);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    width: 90%;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px rgba(201,125,114,.1);
+}
+/* ADDED: error state for form fields */
+.form-input.error,
+.form-textarea.error {
+    border-color: #e05a5a;
+    box-shadow: 0 0 0 3px rgba(224,90,90,.1);
+}
+.form-error {
+    font-size: 0.73rem;
+    color: #c0392b;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.25s, transform 0.25s;
+    min-height: 1rem;
+}
+.form-error.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.form-textarea {
+    resize: vertical;
+    min-height: 130px;
+}
+.form-submit {
+    width: 100%;
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    background: var(--deep-rose);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 0.95rem 2.4rem;
+    font-family: 'Jost', sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 8px 24px rgba(201,125,114,.35);
+}
+.form-submit:hover {
+    background: #b56d62;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(201,125,114,.4);
+}
+
+/* ADDED: success message state on forms */
+.form-success {
+    display: none;
+    text-align: center;
+    padding: 2rem 0;
+}
+.form-success.show {
+    display: block;
+}
+.form-success-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+.form-success h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+.form-success p {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* ADDED: character counter */
+.char-counter {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 0.3rem;
+}
+
+/* ADDED: outline variant */
+.btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--deep-rose);
+    border-radius: 50px;
+    padding: 0.95rem 2.4rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--deep-rose);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-outline:hover {
+    background: var(--deep-rose);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ========================================================================================*/
+/*                                          CART PAGE                                     */
+/*========================================================================================*/
+
+.cart-section {
+    background: var(--white);
+    padding: 3rem 7% 6rem;
+}
+.cart-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 3rem;
+    align-items: start;
+}
+
+/* Column header row */
+.cart-col-header {
+    display: grid;
+    grid-template-columns: 80px 1fr 90px 90px 80px 40px;
+    gap: 1rem;
+    padding: 0 0 1rem;
+    border-bottom: 2px solid var(--beige);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+/* Individual item row */
+.cart-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 90px 120px 80px 40px;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--beige);
+    transition: opacity 0.25s, transform 0.25s;
+}
+.cart-item-img-link {
+    display: block;
+}
+.cart-item-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 14px;
+    object-fit: cover;
+    background: var(--beige);
+    display: block;
+}
+.cart-item-category {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+}
+.cart-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.cart-item-name:hover {
+    color: var(--deep-rose);
+}
+.cart-item-price {
+    font-size: 0.92rem;
+    color: var(--muted);
+}
+.cart-item-qty-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1.5px solid var(--beige);
+    border-radius: 50px;
+    overflow: hidden;
+    background: var(--cream);
+    width: fit-content;
+}
+.cart-qty-btn {
+    width: 32px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--text);
+    transition: background 0.2s;
+    font-family: 'Jost', sans-serif;
+}
+.cart-qty-btn:hover {
+    background: var(--blush);
+}
+.cart-item-qty-num {
+    width: 34px;
+    text-align: center;
+    font-size: 0.88rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+}
+.cart-item-line-total {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text);
+}
+.cart-item-remove {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--beige);
+    background: var(--cream);
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.25s, color 0.25s, background 0.25s;
+}
+.cart-item-remove:hover {
+    border-color: #e05a5a;
+    color: #e05a5a;
+    background: #fff0f0;
+}
+
+/* Empty state */
+.cart-empty {
+    text-align: center;
+    padding: 5rem 2rem;
+}
+.cart-empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.2rem;
+}
+.cart-empty h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 0.6rem;
+}
+.cart-empty p {
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+/* Order summary card */
+/* .cart-summary-col {} */
+.cart-summary-card {
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 2rem 2rem 2.2rem;
+    border: 1px solid var(--beige);
+    position: sticky;
+    top: 100px;
+}
+.cart-summary-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+}
+.cart-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+}
+.cart-summary-divider {
+    height: 1px;
+    background: var(--beige);
+    margin: 1rem 0;
+}
+.cart-summary-total {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+.cart-summary-note {
+    font-size: 0.75rem;
+    color: var(--deep-rose);
+    text-align: center;
+    margin-bottom: 1.4rem;
+    line-height: 1.5;
+    min-height: 1.2em;
+}
+.cart-checkout-btn {
+    width: 100%;
+    margin-bottom: 0.9rem;
+}
+.cart-continue-link {
+    display: block;
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.cart-continue-link:hover {
+    color: var(--deep-rose);
+}
+
+/* ── RESPONSIVE: product detail + cart ─────────────────── */
+@media (max-width: 1024px) {
+    .cart-layout {
+        grid-template-columns: 1fr;
+    }
+    .cart-summary-card {
+        position: static;
+    }
+    .cart-col-header {
+        display: none;
+    }
+    /* hide on smaller screens */
+    .cart-item {
+        grid-template-columns: 70px 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 0.8rem;
+    }
+    .cart-item-price {
+        display: none;
+    }
+    /* shown in line-total */
+    .cart-item-line-total {
+        grid-column: 3;
+    }
+    .cart-item-qty-wrap {
+        grid-column: 1 / 3;
+    }
+    .cart-item-remove {
+        grid-column: 3;
+        grid-row: 1;
+        align-self: start;
+        margin-left: auto;
+    }
+    .cart-item-info {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .cart-item-img {
+        width: 70px;
+        height: 70px;
+    }
+}
+@media (max-width: 900px) {
+    .pd-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+    .pd-section {
+        padding-top: 1.5rem;
+    }
+    .pd-trust {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width: 480px) {
+    .pd-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .pd-add-btn {
+        width: 100%;
+        text-align: center;
+    }
+    .pd-trust {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================================================*/
+/*                                    CHECKOUT+THANK YOU                       */
+/*============================================================================ */
+
+/* ── STEP PROGRESS INDICATOR (shared: checkout + thankyou) ── */
+.chk-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: calc(80px + 2rem) 7% 0;
+    background: var(--white);
+}
+.chk-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+.chk-step-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--beige);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+    background: var(--white);
+    transition: all 0.3s;
+}
+.chk-step.active .chk-step-dot {
+    border-color: var(--deep-rose);
+    color: var(--deep-rose);
+    background: rgba(201,125,114,.08);
+}
+.chk-step.done .chk-step-dot {
+    border-color: var(--deep-rose);
+    background: var(--deep-rose);
+    color: white;
+    font-size: 0.9rem;
+}
+.chk-step.active span,
+.chk-step.done span {
+    color: var(--text);
+}
+.chk-step-line {
+    width: 80px;
+    height: 2px;
+    background: var(--beige);
+    margin: 0 0.4rem 1.2rem;
+    transition: background 0.3s;
+}
+.chk-step-line.done {
+    background: var(--deep-rose);
+}
+
+/* ── CHECKOUT LAYOUT ─────────────────────────────────────── */
+.chk-section {
+    background: var(--cream);
+    padding: 3rem 7% 6rem;
+}
+.chk-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 3rem;
+    align-items: start;
+}
+
+/* Block card (Contact Info / Delivery Address) */
+.chk-block {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2.2rem 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--beige);
+}
+.chk-block-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    margin-bottom: 1.8rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+.chk-block-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--blush);
+    color: var(--deep-rose);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+/* Empty spacer in 2-col rows */
+.chk-spacer {
+    pointer-events: none;
+}
+
+/* Submit button + note */
+.chk-submit-btn {
+    width: 100%;
+    font-size: 0.88rem;
+    margin-bottom: 0.8rem;
+}
+.chk-submit-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Item rows in order summary */
+.chk-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+.chk-item-row {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--beige);
+}
+.chk-item-row:last-child {
+    border-bottom: none;
+}
+.chk-item-thumb {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: var(--beige);
+    flex-shrink: 0;
+}
+.chk-item-meta {
+    flex: 1;
+    min-width: 0;
+}
+.chk-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.chk-item-qty {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+}
+.chk-item-price {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+    flex-shrink: 0;
+}
+
+/* Trust badges below summary */
+.chk-trust-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+}
+.chk-trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    padding: 0.6rem 0.9rem;
+    border-radius: 10px;
+    background: var(--cream);
+    border: 1px solid var(--beige);
+}
+.chk-trust-badge span {
+    font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .chk-layout {
+        grid-template-columns: 1fr;
+    }
+    .chk-steps {
+        padding-top: calc(70px + 1.5rem);
+    }
+}
+@media (max-width: 600px) {
+    .chk-step-line {
+        width: 40px;
+    }
+    .chk-block {
+        padding: 1.6rem 1.2rem;
+    }
+    .chk-steps {
+        gap: 0;
+    }
+}
+
+/* ── THANK YOU PAGE ──────────────────────────────────────── */
+.ty-section {
+    background: var(--cream);
+    padding: 3rem 7% 6rem;
+    min-height: 70vh;
+}
+
+/* Main confirmation card */
+.ty-card {
+    max-width: 700px;
+    margin: 0 auto 4rem;
+    background: var(--white);
+    border-radius: 28px;
+    padding: 3.5rem 3rem;
+    border: 1px solid var(--beige);
+    box-shadow: 0 20px 60px var(--shadow);
+    text-align: center;
+}
+
+/* Pulsing icon */
+.ty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    animation: ty-pop 0.7s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes ty-pop {
+    from {
+        transform: scale(0) rotate(-15deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+.ty-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+}
+.ty-heading em {
+    font-style: italic;
+    color: var(--deep-rose);
+}
+
+.ty-subheading {
+    font-size: 0.93rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto 2rem;
+}
+.ty-subheading strong {
+    color: var(--text);
+}
+
+/* Order number pill */
+.ty-order-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: var(--blush);
+    border-radius: 50px;
+    padding: 0.7rem 1.6rem;
+    margin-bottom: 2.2rem;
+}
+.ty-order-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+.ty-order-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    color: var(--deep-rose);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+/* 2×2 detail grid */
+.ty-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2.2rem;
+    text-align: left;
+}
+.ty-detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 1.1rem 1.2rem;
+    border-radius: 14px;
+    background: var(--cream);
+    border: 1px solid var(--beige);
+}
+.ty-detail-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+.ty-detail-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+}
+.ty-detail-value {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+/* Items ordered list */
+.ty-items-wrap {
+    text-align: left;
+    margin-bottom: 2.2rem;
+    border: 1px solid var(--beige);
+    border-radius: 16px;
+    overflow: hidden;
+}
+.ty-items-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.9rem 1.4rem;
+    background: var(--cream);
+    border-bottom: 1px solid var(--beige);
+}
+.ty-items-list {
+    padding: 0.4rem 1.4rem;
+}
+.ty-item-row {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--beige);
+}
+.ty-item-row:last-child {
+    border-bottom: none;
+}
+.ty-item-thumb {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: var(--beige);
+    flex-shrink: 0;
+}
+.ty-item-meta {
+    flex: 1;
+}
+.ty-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--text);
+}
+.ty-item-qty {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+.ty-item-price {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+/* CTA buttons */
+.ty-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+}
+
+/* Promise strip below card */
+.ty-promise-strip {
+    max-width: 700px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+}
+.ty-promise-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    padding: 1.4rem 1.2rem;
+    border-radius: 18px;
+    background: var(--white);
+    border: 1px solid var(--beige);
+    text-align: left;
+}
+.ty-promise-item > span {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+}
+.ty-promise-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+}
+.ty-promise-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ty-card {
+        padding: 2.5rem 1.5rem;
+    }
+    .ty-details-grid {
+        grid-template-columns: 1fr;
+    }
+    .ty-promise-strip {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 480px) {
+    .ty-actions {
+        flex-direction: column;
+    }
+    .ty-actions a {
+        text-align: center;
+    }
+    .ty-order-badge {
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+}
+
+/* ============================================================================*/
+/*                       Login & Register Pages (auth-*)                       */
+/*============================================================================ */
+
+/* ── AUTH PAGE LAYOUT ───────────────────────────────────── */
+/* Full-viewport two-column split: decorative panel + form  */
+.auth-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    padding-top: 72px;
+    /* nav height */
+}
+
+/* ── LEFT PANEL — brand / decorative ───────────────────── */
+.auth-panel {
+    background: linear-gradient(160deg, var(--deep-rose) 0%, #b56d62 55%, #9e5a50 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+}
+/* Decorative circles */
+.auth-panel::after,
+.auth-panel::before {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,.06);
+    pointer-events: none;
+}
+.auth-panel::before {
+    width: 400px;
+    height: 400px;
+    top: -120px;
+    right: -100px;
+}
+.auth-panel::after {
+    width: 280px;
+    height: 280px;
+    bottom: -80px;
+    left: -60px;
+}
+
+.auth-panel-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 380px;
+}
+
+.auth-panel-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 3rem;
+}
+.auth-panel-logo span {
+    font-style: italic;
+    color: rgba(255,255,255,.75);
+}
+
+.auth-panel-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 3.5vw, 3.4rem);
+    font-weight: 300;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+}
+.auth-panel-heading em {
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    display: block;
+}
+
+.auth-panel-sub {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,.7);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+}
+
+/* Quote block (login panel) */
+.auth-panel-quotes {
+    margin-bottom: 2rem;
+}
+.auth-quote {
+    border-left: 2px solid rgba(255,255,255,.3);
+    padding-left: 1.2rem;
+}
+.auth-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    line-height: 1.6;
+    margin-bottom: 0.4rem;
+}
+.auth-quote span {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,.55);
+    letter-spacing: 0.06em;
+}
+
+/* Badges row (login panel) */
+.auth-panel-badges {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+.auth-panel-badge {
+    background: rgba(255,255,255,.12);
+    color: white;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 50px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+}
+
+/* Perks list (register panel) */
+.auth-panel-perks {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+.auth-perk-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+}
+.auth-perk-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.6);
+    flex-shrink: 0;
+    margin-top: 0.35rem;
+}
+.auth-perk-title {
+    font-size: 0.88rem;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 0.15rem;
+}
+.auth-perk-desc {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,.6);
+    line-height: 1.4;
+}
+
+/* ── RIGHT PANEL — form side ────────────────────────────── */
+.auth-form-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    background: var(--cream);
+    overflow-y: auto;
+}
+
+/* Auth card */
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--white);
+    border-radius: 24px;
+    padding: 2.8rem 2.5rem;
+    border: 1px solid var(--beige);
+    box-shadow: 0 12px 48px var(--shadow);
+}
+
+.auth-card-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.auth-card-icon {
+    font-size: 2rem;
+    margin-bottom: 0.6rem;
+}
+.auth-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+}
+.auth-card-title em {
+    font-style: italic;
+    color: var(--deep-rose);
+}
+.auth-card-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+.auth-switch-link {
+    color: var(--deep-rose);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+.auth-switch-link:hover {
+    opacity: 0.75;
+}
+
+/* Global error banner */
+.auth-global-error {
+    background: #fff0f0;
+    border: 1px solid #e05a5a;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.82rem;
+    color: #c0392b;
+    margin-bottom: 1.2rem;
+    display: none;
+    /* shown via .show */
+    animation: fadeInUp 0.25s ease;
+}
+.auth-global-error.show {
+    display: block;
+}
+
+/* ── AUTH INPUT WITH ICON ───────────────────────────────── */
+.auth-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: box-shadow 0.25s;
+}
+.auth-input-icon {
+    position: absolute;
+    left: 1rem;
+    font-size: 0.9rem;
+    pointer-events: none;
+    z-index: 1;
+    color: var(--muted);
+    transition: color 0.25s;
+}
+/* Shift text right to clear the icon */
+.auth-input {
+    padding-left: 2.6rem !important;
+}
+/* When input is focused, tint the icon */
+.auth-input-wrap:focus-within .auth-input-icon {
+    color: var(--deep-rose);
+}
+/* Error state on the wrap */
+.auth-input-wrap.error .auth-input {
+    border-color: #e05a5a;
+    box-shadow: 0 0 0 3px rgba(224,90,90,.1);
+}
+.auth-input-wrap.error .auth-input-icon {
+    color: #e05a5a;
+}
+
+/* Password show/hide toggle */
+.auth-toggle-pw {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.3rem;
+    color: var(--muted);
+    transition: color 0.2s;
+    line-height: 1;
+}
+.auth-toggle-pw:hover {
+    color: var(--deep-rose);
+}
+
+/* ── REMEMBER ME / TERMS CHECKBOX ───────────────────────── */
+.auth-remember {
+    margin-bottom: 1.5rem;
+}
+.auth-check-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+    user-select: none;
+}
+.auth-check-label a {
+    color: var(--deep-rose);
+    text-decoration: none;
+}
+.auth-check-label a:hover {
+    text-decoration: underline;
+}
+.auth-checkbox {
+    display: none;
+}
+/* hidden — we use custom box */
+.auth-check-box {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1.5px solid var(--beige);
+    background: var(--white);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+}
+.auth-checkbox:checked + .auth-check-box {
+    border-color: var(--deep-rose);
+    background: var(--deep-rose);
+}
+.auth-checkbox:checked + .auth-check-box::after {
+    content: '✓';
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+/* Forgot password link inline in label */
+.auth-forgot-link {
+    margin-left: auto;
+    color: var(--deep-rose);
+    text-decoration: none;
+    font-size: 0.73rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    transition: opacity 0.2s;
+}
+.auth-forgot-link:hover {
+    opacity: 0.7;
+}
+/* Make label flex so forgot link aligns right */
+label[for="login-password"] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ── PASSWORD STRENGTH METER ────────────────────────────── */
+.auth-strength-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+}
+.auth-strength-bar {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--beige);
+    overflow: hidden;
+}
+.auth-strength-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.35s ease, background 0.35s ease;
+    width: 0;
+}
+.auth-strength-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    min-width: 52px;
+    text-align: right;
+    transition: color 0.35s;
+}
+
+/* ── SUBMIT BUTTON ──────────────────────────────────────── */
+.auth-submit-btn {
+    width: 100%;
+    margin-bottom: 0.8rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    transition: background 0.3s, transform 0.2s, opacity 0.2s;
+}
+.auth-submit-btn:disabled {
+    opacity: 0.65;
+    transform: none;
+    cursor: default;
+}
+
+/* ── DIVIDER ────────────────────────────────────────────── */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 1.2rem 0;
+    color: var(--muted);
+    font-size: 0.75rem;
+}
+.auth-divider::after,
+.auth-divider::before {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--beige);
+}
+
+/* ── GUEST BUTTON ───────────────────────────────────────── */
+.auth-guest-btn {
+    width: 80%;
+    text-align: center;
+    display: block;
+    font-size: 0.78rem;
+}
+
+/* ── TERMS NOTE ─────────────────────────────────────────── */
+.auth-terms {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 1.2rem;
+    line-height: 1.6;
+}
+.auth-terms a {
+    color: var(--deep-rose);
+    text-decoration: none;
+}
+.auth-terms a:hover {
+    text-decoration: underline;
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────*/
+@media (max-width: 900px) {
+    .auth-page {
+        grid-template-columns: 1fr;
+    }
+    .auth-panel {
+        display: none;
+    }
+    .auth-form-side {
+        padding: 2rem 1.2rem;
+        min-height: calc(100vh - 72px);
+    }
+    .auth-card {
+        padding: 2.2rem 1.6rem;
+        box-shadow: none;
+        border: none;
+        background: transparent;
+    }
+}
+@media (max-width: 480px) {
+    .auth-card-title {
+        font-size: 1.9rem;
+    }
+}
+
+/* ============================================================================*/
+/*                                 ADMIN PAGES                                 */
+/*============================================================================ */
+
+/* =========================================================
+   ADDED: Admin Pages (admin.html, add-product, edit-product)
+   All new selectors are namespaced under adm-*
+   Reuses: .chk-block, .form-*, .btn-primary, .page-hero,
+           .product-card, .filter-tabs, .filter-tab
+   ========================================================= */
+
+/* ── SECTION WRAPPER ────────────────────────────────────── */
+.adm-section {
+    background: var(--cream);
+    padding: 3rem 7% 6rem;
+}
+
+/* ── TOOLBAR ────────────────────────────────────────────── */
+.adm-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+}
+.adm-add-btn {
+    white-space: nowrap;
+    display: block;
+    margin-left: auto;
+}
+
+/* ── TABLE ──────────────────────────────────────────────── */
+.adm-table-wrap {
+    background: var(--white);
+    border-radius: 20px;
+    border: 1px solid var(--beige);
+    overflow: hidden;
+    margin-top: 1.5rem;
+}
+.adm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+.adm-table thead tr {
+    background: var(--beige);
+}
+.adm-table th {
+    padding: 0.9rem 1.2rem;
+    text-align: left;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    white-space: nowrap;
+}
+.adm-th-img {
+    width: 72px;
+}
+.adm-th-actions {
+    width: 140px;
+    text-align: center;
+}
+
+.adm-tr {
+    border-top: 1px solid var(--beige);
+    transition: background 0.2s;
+}
+.adm-tr:hover {
+    background: var(--cream);
+}
+.adm-tr-custom {
+    background: rgba(245,217,208,.12);
+}
+.adm-tr-custom:hover {
+    background: rgba(245,217,208,.25);
+}
+
+.adm-table td {
+    padding: 0.9rem 1.2rem;
+    vertical-align: middle;
+}
+.adm-table td:last-child {
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+/* Thumbnail */
+.adm-td-img {
+    width: 72px;
+}
+.adm-thumb {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: var(--beige);
+    display: block;
+}
+
+/* Name + badge */
+.adm-td-name {
+    min-width: 160px;
+}
+.adm-product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.3;
+}
+.adm-badge-pill {
+    display: inline-block;
+    margin-top: 0.25rem;
+    background: var(--deep-rose);
+    color: white;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.55rem;
+    border-radius: 50px;
+}
+
+/* Category */
+.adm-category {
+    font-size: 0.78rem;
+    color: var(--muted);
+}
+
+/* Type pill */
+.adm-type-pill {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    padding: 0.28rem 0.75rem;
+    border-radius: 50px;
+    white-space: nowrap;
+}
+.adm-type-builtin {
+    background: var(--beige);
+    color: var(--muted);
+}
+.adm-type-custom {
+    background: var(--blush);
+    color: var(--deep-rose);
+    border: 1px solid var(--rose);
+}
+
+/* Action buttons */
+.adm-td-actions {
+    text-align: center;
+    white-space: nowrap;
+}
+.adm-btn-edit {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    background: var(--blush);
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--rose);
+    transition: background 0.25s, color 0.25s;
+    margin-right: 0.4rem;
+}
+.adm-btn-edit:hover {
+    background: var(--deep-rose);
+    color: white;
+    border-color: var(--deep-rose);
+}
+.adm-btn-delete {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    background: transparent;
+    color: #c0392b;
+    border: 1px solid #e05a5a;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    transition: background 0.25s, color 0.25s;
+}
+.adm-btn-delete:hover {
+    background: #e05a5a;
+    color: white;
+}
+.adm-readonly-note {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    font-style: italic;
+}
+
+/* Empty state */
+.adm-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* ─────────────────────────── DELETE CONFIRM MODAL ────────────────────────────────── */
+.adm-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(58,46,43,.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+    animation: fadeIn 0.2s ease;
+}
+.adm-modal {
+    background: var(--white);
+    border-radius: 22px;
+    padding: 2.5rem 2.5rem 2rem;
+    max-width: 380px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    animation: fadeInUp 0.25s ease;
+}
+.adm-modal-icon {
+    font-size: 2.2rem;
+    margin-bottom: 0.6rem;
+}
+.adm-modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+}
+.adm-modal-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.8rem;
+}
+.adm-modal-actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+}
+.adm-delete-confirm-btn {
+    background: #e05a5a;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 0.75rem 1.8rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s;
+}
+.adm-delete-confirm-btn:hover {
+    background: #c0392b;
+}
+
+/* ─────────────────────────── ADD / EDIT FORM LAYOUT ─────────────────────────────── */
+.adm-form-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 3rem;
+    align-items: start;
+}
+
+/* Price field with $ symbol */
+.adm-price-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.adm-price-symbol {
+    position: absolute;
+    left: 1rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    pointer-events: none;
+    font-weight: 500;
+}
+.adm-price-input {
+    padding-left: 2rem !important;
+}
+
+/* Helper text below fields */
+.adm-field-hint {
+    font-size: 0.73rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+    line-height: 1.5;
+}
+.adm-optional {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 300;
+    color: var(--muted);
+}
+
+/* Form action row */
+.adm-form-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+.adm-submit-btn {
+    min-width: 160px;
+}
+
+/* ─────────────────────────── LIVE PREVIEW COLUMN ────────────────────────────────── */
+/* .adm-preview-col {} */
+.adm-preview-sticky {
+    position: sticky;
+    top: 100px;
+}
+.adm-preview-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.adm-preview-label::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 1px;
+    background: var(--deep-rose);
+}
+.adm-preview-card {
+    cursor: default !important;
+}
+.adm-preview-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+    background: var(--beige);
+}
+.adm-preview-placeholder span {
+    font-size: 2rem;
+}
+.adm-preview-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.8rem;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* ── NOTICE BANNERS ─────────────────────────────────────── */
+.adm-notice {
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+.adm-notice-warn {
+    background: #fffbea;
+    border: 1px solid #f0c070;
+    color: #8a6500;
+}
+.adm-notice-link {
+    display: inline-block;
+    margin-top: 0.3rem;
+    color: var(--deep-rose);
+    text-decoration: none;
+    font-weight: 500;
+}
+.adm-notice-link:hover {
+    text-decoration: underline;
+}
+
+/* ======================================================================================================= */
+/* ── ANIMATIONS ── (should be at the bottom)*/
+/*==========================================================================================*/
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.hero-left {
+    animation: fadeIn 1s ease;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 2000px) {
+    .benefits-grid {
+        max-height: 80vh;
+    }
+    .benefits-image {
+        max-height: 80vh;
+    }
+
+}
+@media (max-width: 1100px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+    }
+    .benefits-grid {
+        height: auto;
+    }
+}
+@media (max-width: 768px) {
+    .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+    .hero-right {
+        height: 55vw;
+        min-height: 320px;
+    }
+    .hero-left {
+        padding: 4rem 6% 3rem;
+    }
+    .hero-badge {
+        display: none;
+    }
+    .nav-links {
+        display: none;
+    }
+    .benefits-grid {
+        height: auto;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+    .benefits-float {
+        right: 1rem;
+    }
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    section {
+        padding: 4rem 5%;
+    }
+}
+@media (max-width: 600px) {
+    .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+    }
+    .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .hero-right {
+        opacity: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ======================================================================================================= */
+/*sosaaaaaaaaa*/
+.nav-user {
+    margin-right: 10px;
+    font-weight: 500;
+    color: var(--text);
+}
+.form-error {
+    color: red;
+    font-size: 0.8rem;
+    display: none;
+}
+
+.form-error.show {
+    display: block;
+}
+.auth-global-error {
+    display: none;
+    background: #ffe6e6;
+    color: #b30000;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.auth-global-error.show {
+    display: block;
+}

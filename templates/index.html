@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+            rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="{{ url_for('static', filename='js/main.js') }}" defer="defer"></script>
+        <script src="{{ url_for('static', filename='js/base.js') }}" defer="defer"></script>
+        <title>Lumière — Glow Naturally</title>
+    </head>
+    <body 
+  data-user="{{ session.get('user_name') or '' }}"
+  data-admin="{{ session.get('is_admin') or 0 }}">
+        <div id="navbar"></div>
+        <!-- HERO -->
+        <section class="hero" id="hero">
+            <div class="hero-left">
+                <div class="hero-tag">New Spring Collection</div>
+                <h1>Glow<br>
+                    <em>Naturally</em>
+                </h1>
+                <p class="hero-desc">Skin that radiates from within — crafted with botanical
+                    ingredients, gentle rituals, and the love your skin truly deserves.</p>
+                <div class="hero-actions">
+                    <button class="btn-primary">Explore Collection</button>
+                    <button class="btn-ghost">Our Story</button>
+                </div>
+                <div class="hero-stats">
+                    <div>
+                        <div class="stat-num">98%</div>
+                        <div class="stat-label">Natural Ingredients</div>
+                    </div>
+                    <div>
+                        <div class="stat-num">12K+</div>
+                        <div class="stat-label">Happy Customers</div>
+                    </div>
+                    <div>
+                        <div class="stat-num">Cruelty<br>
+                            <small>Free</small>
+                        </div>
+                        <div class="stat-label">Certified</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-right">
+
+                <div class="hero-badge">
+                    <div class="badge-icon">🌿</div>
+                    <div>
+                        <div class="badge-title">100% Vegan</div>
+                        <div class="badge-sub">Clean Beauty Certified</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END HERO -->
+        <!-- MARQUEE STRIP -->
+        <marquee class="marquee-strip" scrollamount="5">
+            <div class="marquee-inner">
+                <span class="marquee-item">Botanical Bliss</span>
+                <span class="marquee-item">Clean Beauty</span>
+                <span class="marquee-item">Cruelty Free</span>
+                <span class="marquee-item">Natural Glow</span>
+                <span class="marquee-item">Vegan Formula</span>
+                <span class="marquee-item">Radiant Skin</span>
+
+            </div>
+
+        </marquee>
+        <!-- PRODUCTS -->
+        <section class="products" >
+            <div class="products-header">
+                <div>
+                    <div class="hero-tag">Bestsellers</div>
+                    <h2 class="section-title">Your New
+                        <em>Daily Ritual</em>
+                    </h2>
+                </div>
+                <a href="/shop" class="view-all">View All</a>
+            </div>
+            <div class="products-grid">
+
+                {% for p in products %}
+                    <div class="product-card " data-id="{{ p.product_id }}">
+
+                        <div class="product-img-wrap">
+                            <img src="/static/images/products/{{ p.image_url }}" alt="{{ p.name }}">
+                        </div>
+
+                        <div class="product-info">
+                            <div class="product-category">{{ p.category }}</div>
+                            <div class="product-name">{{ p.name }}</div>
+
+                            <div class="product-footer">
+                                <span class="product-price">${{ p.price }}</span>
+
+                                <form action="/add-to-cart" method="POST">
+                                    <input type="hidden" name="product_id" value="{{ p.product_id }}">
+                                    <button type="submit" class="add-btn">Add to Bag</button>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+
+        </section>
+        <!-- BENEFITS -->
+        <section class="benefits" id="benefits">
+            <div class="benefits-grid">
+                <div class="benefits-image">
+                    <img
+                        src="{{ url_for('static', filename='/images/products/benefit.avif') }}"
+                        alt="Benefits Image">
+                    <div class="benefits-float">
+                        <div class="float-percent">98%</div>
+                        <div class="float-text">Saw visible glow<br>within 2 weeks</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="section-label">Why Lumière</div>
+                    <h2 class="section-title">Skin that
+                        <em>Loves You</em>
+                        Back</h2>
+                    <p class="section-sub">Every ingredient chosen with intention. Every formula
+                        crafted for real, lasting results — no fluff, no fillers.</p>
+                    <div class="benefits-list" style="margin-top: 2.5rem;">
+                        <div class="benefit-item">
+                            <div class="benefit-icon">💧</div>
+                            <div>
+                                <div class="benefit-title">Deep Hydration</div>
+                                <div class="benefit-desc">Our hyaluronic complex draws moisture deep into the
+                                    skin layers, locking in softness for up to 72 hours.</div>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🌿</div>
+                            <div>
+                                <div class="benefit-title">Natural Ingredients</div>
+                                <div class="benefit-desc">Sourced from ethical farms — rosehip, aloe vera, green
+                                    tea extract — everything your skin recognizes and loves.</div>
+
+                            </div>
+                        </div>
+
+                        <div class="benefit-item">
+                            <div class="benefit-icon">✨</div>
+                            <div>
+                                <div class="benefit-title">Radiant Glow</div>
+                                <div class="benefit-desc">Our signature brightening complex visibly evens skin
+                                    tone and amplifies your natural luminosity from day one.</div>
+                            </div>
+                        </div>
+                        <a
+                            href="/about"
+                            class="btn-primary"
+                            style="margin-top: 2rem; width: 170px;align-self: center; justify-content: center;">Learn More about Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+      
+        <div id="footer"></div>
+
+    </body>
+</html>

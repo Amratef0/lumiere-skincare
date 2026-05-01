@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Add Product — Lumière Admin</title>
+        <script src="js/admin-guard.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+            rel="stylesheet"/>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/style.css') }}"/>
+        <script src="{{ url_for('static', filename='js/main.js') }}" defer="defer"></script>
+        <script src="{{ url_for('static', filename='js/base.js') }}" defer="defer"></script>
+        <script src="{{ url_for('static', filename='js/add-products.js') }}"
+            defer="defer"></script>
+
+    </head>
+    <body data-user="{{ session.get('user_name') or '' }}">
+
+        <div id="navbar"></div>
+
+        <!-- ── PAGE HERO ── -->
+        <div class="page-hero">
+            <div class="section-label">Admin › Products</div>
+            <h1 class="section-title">{{ "Edit Product" if product else "Add Product" }}
+                <em>{{ product.name if product else '' }}</em>
+            </h1>
+            <p>Fill in the details below to add a new product to the catalogue.</p>
+        </div>
+
+        <!-- ── FORM + PREVIEW LAYOUT ── -->
+        <section class="adm-section">
+            <div class="adm-form-layout">
+
+                <!-- ── LEFT: Form ── -->
+                <div class="adm-form-col">
+
+                    <form method="POST"  id="productForm" novalidate="novalidate">
+
+                        {% if product %}
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                        {% endif %}
+
+                        <!-- Product Name -->
+                        <div class="form-group">
+                            <label class="form-label">Product Name *</label>
+                            <input
+                                class="form-input"
+                                id="pf-name"
+                                name="name"
+                                type="text"
+                                value="{{ product.name if product else '' }}"
+                                placeholder="e.g. Rose Glow Serum">
+                            <span class="form-error" id="pf-name-error"></span>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="form-group">
+                            <label class="form-label">Category *</label>
+
+                            <!-- select -->
+                            <select id="pf-category-select" class="form-select form-input">
+                                <option value="">— Select category —</option>
+                                <option value="Face Serum">Face Serum</option>
+                                <option value="Moisturizer">Moisturizer</option>
+                                <option value="Cleanser">Cleanser</option>
+                                <option value="Eye Care">Eye Care</option>
+                                <option value="Toner">Toner</option>
+                                <option value="SPF">SPF</option>
+                                <option value="Mask">Mask</option>
+                                <option value="Other">Other</option>
+                            </select>
+
+                            <!-- hidden -->
+                            <input
+                                type="text"
+                                id="pf-category"
+                                name="category"
+                                value="{{ product.category if product else '' }}"
+                                hidden="hidden">
+
+                            <!-- custom -->
+                            <input
+                                type="text"
+                                id="pf-category-custom"
+                                placeholder="Enter new category"
+                                style="display:none"
+                                class="form-input">
+
+                            <span class="form-error" id="pf-category-error"></span>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="form-group">
+                            <label class="form-label">Price *</label>
+                            <input
+                                class="form-input"
+                                id="pf-price"
+                                name="price"
+                                type="number"
+                                step="0.01"
+                                value="{{ product.price if product else '' }}"
+                                placeholder="0.00">
+                            <span class="form-error" id="pf-price-error"></span>
+                        </div>
+
+                        <!-- Image -->
+                        <div class="form-group">
+                            <label class="form-label">Image *</label>
+                            <input
+                                class="form-input"
+                                id="pf-image"
+                                name="image"
+                                type="text"
+                                value="{{ product.image if product else '' }}"
+                                placeholder="e.g. cleanser1.jpg">
+                            <span class="form-error" id="pf-image-error"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label class="form-label">Description *</label>
+                            <textarea class="form-textarea" id="pf-description" name="description" rows="4">{{ product.description if product else '' }}</textarea>
+
+                            <div class="char-counter" id="pf-desc-counter">0 / 500</div>
+                            <span class="form-error" id="pf-description-error"></span>
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit" class="btn-primary" id="pf-submit-btn">
+                            {{ "Update Product" if product else "Add Product" }}
+                        </button>
+
+                    </form>
+                </div>
+
+                <!-- ── RIGHT: Live Preview ── -->
+                <div class="adm-preview-col">
+                    <div class="adm-preview-sticky">
+                        <div class="adm-preview-label">Live Preview</div>
+                        <div class="product-card adm-preview-card" style="cursor:default;">
+                            <div class="product-img-wrap">
+                                <img
+                                    id="preview-img"
+                                    src=""
+                                    alt="Preview"
+                                    onerror="this.style.display='none'; document.getElementById('preview-placeholder').style.display='flex';"/>
+                                <div class="adm-preview-placeholder" id="preview-placeholder">
+                                    <span>🖼</span>
+                                    <p>Image preview</p>
+                                </div>
+                                <span class="product-badge" id="preview-badge" style="display:none;"></span>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-category" id="preview-category">Category</div>
+                                <div class="product-name" id="preview-name">Product Name</div>
+                                <div class="product-footer">
+                                    <span class="product-price" id="preview-price">$0.00</span>
+                                    <button
+                                        class="add-btn"
+                                        type="button"
+                                        disabled="disabled"
+                                        style="opacity:.5; cursor:default;">Add to Bag</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="adm-preview-note">This is how the product card will appear in the store.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ── FOOTER ── -->
+        <div id="footer"></div>
+
+    </body>
+</html>
