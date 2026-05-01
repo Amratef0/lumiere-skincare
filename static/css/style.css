@@ -3101,3 +3101,6 @@ nav {
 nav .nav-right {
     flex-shrink: 0;
 }
+#footer {
+    margin-top: 3rem;
+}
