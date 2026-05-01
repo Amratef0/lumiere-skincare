@@ -2960,7 +2960,6 @@ label[for="login-password"] {
     .footer-top {
         grid-template-columns: 1fr;
         gap: 2rem;
-        margin-top: 300px;
     }
     section {
         padding: 4rem 5%;
@@ -3015,4 +3014,28 @@ label[for="login-password"] {
 
 .auth-global-error.show {
     display: block;
+}
+@media (max-width: 768px) {
+    .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .benefits-image {
+        aspect-ratio: 3/2;
+    }
+
+    .benefits-float {
+        right: 1rem;
+    }
+
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
 }
