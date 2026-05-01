@@ -13,6 +13,8 @@
 }
 html {
     scroll-behavior: smooth;
+     max-width: 100%;
+    overflow-x: hidden;
 }
 
 * {
@@ -25,6 +27,7 @@ body {
     background: var(--cream);
     color: var(--text);
     overflow-x: hidden;
+     max-width: 100%;
 }
 /* ── NAV ─────────────────────────────────────────────── */
 nav {
@@ -3089,4 +3092,12 @@ label[for="login-password"] {
         bottom: 1rem;
         min-width: 130px;
     }
+}
+nav {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+nav .nav-right {
+    flex-shrink: 0;
 }
