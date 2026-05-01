@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import mysql.connector
 from datetime import datetime
 import os
+import re
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(
     __name__,
@@ -305,6 +307,11 @@ def place_order():
     return render_template("thankyou.html", order=order, items=items)
 
 
+#  REGISTER
+@app.route("/register", methods=["GET"])
+def register_page():
+    return render_template("register.html", error="")
+
 @app.route("/register", methods=["POST"])
 def register():
     name     = request.form.get("name", "").strip()
@@ -341,7 +348,7 @@ def register():
         db.close()
         return render_template("register.html", error="Email already registered.")
 
-    #  HASH PASSWORD (مهم جدًا)
+    # 🔥 HASH PASSWORD (مهم جدًا)
     hashed_password = generate_password_hash(password)
 
     cursor.execute(
@@ -354,6 +361,11 @@ def register():
 
     return redirect(url_for("login_page"))
 
+
+#  LOGIN
+@app.route("/login", methods=["GET"])
+def login_page():
+    return render_template("login.html", error="")
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -370,7 +382,7 @@ def login():
     if not user:
         return render_template("login.html", error="Invalid email or password.")
 
-    #  check hashed password
+    # 🔥 check hashed password
     if not check_password_hash(user["password"], password):
         return render_template("login.html", error="Invalid email or password.")
 
