@@ -7,13 +7,22 @@ document.addEventListener("DOMContentLoaded", function () {
     let authHTML = "";
 
     if (user && isAdmin === "1") {
-      //  Admin
-      authHTML = `
-        <span class="nav-user">Hi, ${user} </span>
-        <a href="/admin" class="nav-admin-link">Admin</a>
-        <a href="/logout" class="nav-login">Logout</a>
-      `;
-    } 
+  authHTML = `
+    <span class="nav-user">Hi, ${user}</span>
+    <a href="/admin" style="
+        background: #ff7a18;
+        color: white;
+        padding: 6px 14px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0 8px;
+        display: inline-block;
+    ">Admin</a>
+    <a href="/logout" class="nav-login">Logout</a>
+  `;
+}
     else if (user) {
       //  Normal user
       authHTML = `
