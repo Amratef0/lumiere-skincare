@@ -3069,19 +3069,15 @@ label[for="login-password"] {
     gap: 3rem;
   }
 } 
-@media (max-width: 992px) {
-  .footer-top {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .footer-top {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .benefits-image {
+    aspect-ratio: auto;
+    height: 300px; /* أو 250 حسب الشكل اللي انت عايزه */
   }
 
-  .footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
+  .benefits-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 }
