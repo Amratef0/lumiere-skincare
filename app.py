@@ -54,11 +54,12 @@ def index():
     db = get_db()
     cursor = db.cursor(dictionary=True)
     cursor.execute("""
-        SELECT p.product_id, p.name, p.price, p.image_url, c.name AS category
-        FROM products p
-        JOIN categories c ON p.category_id = c.category_id
-        LIMIT 6
-    """)
+    SELECT p.product_id, p.name, p.price, p.image_url, c.name AS category
+    FROM products p
+    JOIN categories c ON p.category_id = c.category_id
+    ORDER BY p.product_id DESC
+    LIMIT 6
+""")
     products = cursor.fetchall()
     db.close()
     return render_template("index.html", products=products)
@@ -141,7 +142,7 @@ def add_to_cart():
     return redirect(url_for("cart"))
 
 
-#  UPDATE CART (زيادة / نقصان)
+#  UPDATE CART 
 @app.route("/update-cart", methods=["POST"])
 def update_cart():
     product_id = request.form.get("product_id")
