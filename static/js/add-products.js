@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
       valid = false;
     }
 
-    // 💥 أهم سطر
     if (!valid) {
       e.preventDefault();
 

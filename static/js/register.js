@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
       valid = false;
     }
 
-    //  لو فيه error → وقف الإرسال
     if (!valid) {
       e.preventDefault();
     }

@@ -22,8 +22,84 @@ def get_db():
         port=3306
     )
 
+#-----------------------------------------------------------------------------------------------------------------------#
+
+
+
+#  HOME
+@app.route("/")
+def index():
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("""
+    SELECT p.product_id, p.name, p.price, p.image_url, c.name AS category
+    FROM products p
+    JOIN categories c ON p.category_id = c.category_id
+    ORDER BY p.product_id DESC
+    LIMIT 4
+""")
+    products = cursor.fetchall()
+    db.close()
+    return render_template("index.html", products=products)
+
+#-----------------------------------------------------------------------------------------------------------------------#
+
+#  SHOP
+@app.route("/shop")
+def shop():
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+
+    category_filter = request.args.get("category", "all") # get categories from url
+
+    cursor.execute("SELECT name FROM categories ORDER BY name") # get categories from db
+    categories = [row["name"] for row in cursor.fetchall()] # put the categories in list
+
+    if category_filter and category_filter != "all": # if user choose specific category
+        cursor.execute("""
+            SELECT p.product_id, p.name, p.price, p.image_url, c.name AS category
+            FROM products p
+            JOIN categories c ON p.category_id = c.category_id
+            WHERE LOWER(c.name) = %s
+        """, (category_filter.lower(),)) # to ignore case
+    else:
+        cursor.execute("""
+            SELECT p.product_id, p.name, p.price, p.image_url, c.name AS category
+            FROM products p
+            JOIN categories c ON p.category_id = c.category_id
+        """)
+
+    products = cursor.fetchall()
+    db.close()
+    return render_template("shop.html", products=products, categories=categories)
+
+
+#-----------------------------------------------------------------------------------------------------------------------#
+
+
+#  PRODUCT DETAIL
+@app.route("/product/<int:product_id>") # dynamic route to fetch product id from url
+def product(product_id):
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT p.product_id AS id, p.product_id, p.name, p.price, p.description,
+               p.image_url AS image, c.name AS category
+        FROM products p
+        JOIN categories c ON p.category_id = c.category_id
+        WHERE p.product_id = %s
+    """, (product_id,))
+    product = cursor.fetchone()
+    db.close()
+    if not product:
+        return redirect(url_for("shop"))
+    return render_template("product.html", product=product)
+
+
+#-----------------------------------------------------------------------------------------------------------------------#
 
 #  HELPER: get or create cart
+
 def get_cart_id(db):
     cursor = db.cursor(dictionary=True)
 
@@ -49,73 +125,7 @@ def get_cart_id(db):
         db.commit()
         return cursor.lastrowid
 
-
-#  HOME
-@app.route("/")
-def index():
-    db = get_db()
-    cursor = db.cursor(dictionary=True)
-    cursor.execute("""
-    SELECT p.product_id, p.name, p.price, p.image_url, c.name AS category
-    FROM products p
-    JOIN categories c ON p.category_id = c.category_id
-    ORDER BY p.product_id DESC
-    LIMIT 4
-""")
-    products = cursor.fetchall()
-    db.close()
-    return render_template("index.html", products=products)
-
-
-#  SHOP
-@app.route("/shop")
-def shop():
-    db = get_db()
-    cursor = db.cursor(dictionary=True)
-
-    category_filter = request.args.get("category", "all")
-
-    cursor.execute("SELECT name FROM categories ORDER BY name")
-    categories = [row["name"] for row in cursor.fetchall()]
-
-    if category_filter and category_filter != "all":
-        cursor.execute("""
-            SELECT p.product_id, p.name, p.price, p.image_url, c.name AS category
-            FROM products p
-            JOIN categories c ON p.category_id = c.category_id
-            WHERE LOWER(c.name) = %s
-        """, (category_filter.lower(),))
-    else:
-        cursor.execute("""
-            SELECT p.product_id, p.name, p.price, p.image_url, c.name AS category
-            FROM products p
-            JOIN categories c ON p.category_id = c.category_id
-        """)
-
-    products = cursor.fetchall()
-    db.close()
-    return render_template("shop.html", products=products, categories=categories)
-
-
-#  PRODUCT DETAIL
-@app.route("/product/<int:product_id>")
-def product(product_id):
-    db = get_db()
-    cursor = db.cursor(dictionary=True)
-    cursor.execute("""
-        SELECT p.product_id AS id, p.product_id, p.name, p.price, p.description,
-               p.image_url AS image, c.name AS category
-        FROM products p
-        JOIN categories c ON p.category_id = c.category_id
-        WHERE p.product_id = %s
-    """, (product_id,))
-    product = cursor.fetchone()
-    db.close()
-    if not product:
-        return redirect(url_for("shop"))
-    return render_template("product.html", product=product)
-
-
+#-----------------------------------------------------------------------------------------------------------------------#
 #  ADD TO CART
 @app.route("/add-to-cart", methods=["POST"])
 def add_to_cart():
@@ -143,6 +153,7 @@ def add_to_cart():
     db.close()
     return redirect(url_for("cart"))
 
+#-----------------------------------------------------------------------------------------------------------------------#
 
 #  UPDATE CART 
 @app.route("/update-cart", methods=["POST"])
@@ -178,6 +189,7 @@ def update_cart():
     db.close()
     return redirect(url_for("cart"))
 
+#-----------------------------------------------------------------------------------------------------------------------#
 
 #  CART PAGE
 @app.route("/cart")
@@ -199,6 +211,7 @@ def cart():
     count = sum(i["qty"] for i in items)
     return render_template("cart.html", items=items, total=total, count=count)
 
+#-----------------------------------------------------------------------------------------------------------------------#
 
 #  CHECKOUT  GET
 @app.route("/checkout", methods=["GET"])
@@ -220,12 +233,16 @@ def checkout():
     shipping = 0 if subtotal >= 700 or subtotal == 0 else 8
     total    = subtotal + shipping
 
-    return render_template("checkout.html",
-                           items=items,
-                           subtotal=subtotal,
-                           shipping=shipping,
-                           total=total,
-                           error="")
+return render_template("checkout.html",
+items=items,
+subtotal=subtotal,
+shipping=shipping,
+total=total,
+error="")
+
+
+
+#-----------------------------------------------------------------------------------------------------------------------#
 
 
 #  CHECKOUT  POST  → place order
@@ -306,6 +323,7 @@ def place_order():
 
     return render_template("thankyou.html", order=order, items=items)
 
+#-----------------------------------------------------------------------------------------------------------------------#
 
 #  REGISTER
 @app.route("/register", methods=["GET"])
@@ -348,7 +366,7 @@ def register():
         db.close()
         return render_template("register.html", error="Email already registered.")
 
-    # 🔥 HASH PASSWORD (مهم جدًا)
+    #  HASH PASSWORD 
     hashed_password = generate_password_hash(password)
 
     cursor.execute(
@@ -361,11 +379,14 @@ def register():
 
     return redirect(url_for("login_page"))
 
+#-----------------------------------------------------------------------------------------------------------------------#
 
 #  LOGIN
 @app.route("/login", methods=["GET"])
 def login_page():
     return render_template("login.html", error="")
+
+
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -382,7 +403,7 @@ def login():
     if not user:
         return render_template("login.html", error="Invalid email or password.")
 
-    # 🔥 check hashed password
+    #  check hashed password
     if not check_password_hash(user["password"], password):
         return render_template("login.html", error="Invalid email or password.")
 
@@ -392,12 +413,15 @@ def login():
 
     return redirect(url_for("index"))
 
+#-----------------------------------------------------------------------------------------------------------------------#
 
 #  LOGOUT
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("index"))
+
+#-----------------------------------------------------------------------------------------------------------------------#
 
 
 #  ADMIN — list products
@@ -420,12 +444,18 @@ def admin():
     return render_template("admin.html", products=products)
 
 
+#-----------------------------------------------------------------------------------------------------------------------#
+
+
 #  ADMIN — product form  (Add)
 @app.route("/product-form", methods=["GET"])
 def product_form_add():
     if not session.get("is_admin"):
         return redirect(url_for("login_page"))
     return render_template("product-form.html", product=None)
+
+
+
 
 @app.route("/product-form", methods=["POST"])
 def product_form_add_post():
@@ -459,6 +489,9 @@ def product_form_add_post():
     return redirect(url_for("admin"))
 
 
+#-----------------------------------------------------------------------------------------------------------------------#
+
+
 #  ADMIN — product form  (Edit)
 @app.route("/product-form/<int:product_id>", methods=["GET"])
 def product_form_edit(product_id):
@@ -477,6 +510,8 @@ def product_form_edit(product_id):
     product = cursor.fetchone()
     db.close()
     return render_template("product-form.html", product=product)
+
+
 
 @app.route("/product-form/<int:product_id>", methods=["POST"])
 def product_form_edit_post(product_id):
@@ -510,6 +545,7 @@ def product_form_edit_post(product_id):
     db.close()
     return redirect(url_for("admin"))
 
+#-----------------------------------------------------------------------------------------------------------------------#
 
 #  ADMIN — delete product
 @app.route("/delete-product", methods=["POST"])
@@ -525,11 +561,14 @@ def delete_product():
     db.close()
     return redirect(url_for("admin"))
 
+#-----------------------------------------------------------------------------------------------------------------------#
 
 #  CONTACT
 @app.route("/contact", methods=["GET"])
 def contact():
     return render_template("contact.html")
+
+
 
 @app.route("/contact", methods=["POST"])
 def contact_post():
@@ -551,11 +590,15 @@ def contact_post():
     return redirect(url_for("contact"))
 
 
+#-----------------------------------------------------------------------------------------------------------------------#
+
+
 #  ABOUT
 @app.route("/about")
 def about():
     return render_template("about.html")
 
+#-----------------------------------------------------------------------------------------------------------------------#
 
 #  RUN
 if __name__ == "__main__":
