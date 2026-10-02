@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-lumiere}
+      MYSQL_USER: ${MYSQL_USER:-lumiere}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-lumiere_pass}
+    volumes:
+      - db_data:/var/lib/mysql
+      # Any *.sql file placed in ./db runs once, on first startup (schema + seed data)
+      - ./db:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-5000}:5000"
+    environment:
+      MYSQLHOST: db
+      MYSQLPORT: "3306"
+      MYSQLUSER: ${MYSQL_USER:-lumiere}
+      MYSQLPASSWORD: ${MYSQL_PASSWORD:-lumiere_pass}
+      MYSQLDATABASE: ${MYSQL_DATABASE:-lumiere}
+      SECRET_KEY: ${SECRET_KEY:-change-me}
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:
