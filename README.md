@@ -2,7 +2,6 @@
 
 A full-stack e-commerce web application for a skincare brand, built with Flask and MySQL.
 
-[![CI](https://github.com/Amratef0/lumiere-skincare/actions/workflows/ci.yml/badge.svg)](https://github.com/Amratef0/lumiere-skincare/actions/workflows/ci.yml)
 
 ---
 
