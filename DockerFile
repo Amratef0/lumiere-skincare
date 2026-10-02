@@ -1,0 +1,26 @@
+# syntax=docker/dockerfile:1
+
+# ---------- Base ----------
+FROM python:3.12-slim AS base
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+WORKDIR /app
+
+# ---------- Builder: install dependencies ----------
+FROM base AS builder
+COPY requirements.txt .
+RUN pip install --prefix=/install -r requirements.txt
+
+# ---------- Runtime ----------
+FROM base AS runtime
+RUN useradd --create-home --uid 1000 appuser
+COPY --from=builder /install /usr/local
+COPY --chown=appuser:appuser . .
+USER appuser
+
+EXPOSE 5000
+
+# PORT is injected automatically by platforms like Railway; defaults to 5000.
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-5000} --workers ${WEB_CONCURRENCY:-2} app:app"]
