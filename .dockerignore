@@ -1,0 +1,36 @@
+# VCS / CI
+.git
+.gitignore
+.github
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Deployment / docs / DB init (not needed inside the image)
+Procfile
+README.md
+db/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
