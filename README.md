@@ -1,6 +1,5 @@
 # 🧴 Lumière Skincare
 
-![CI](https://github.com/Amratef0/lumiere-skincare/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-Gunicorn-000000?logo=flask)
 ![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?logo=mysql&logoColor=white)
